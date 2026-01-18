@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Permitly</string>
+    <string name="welcome_poster">Welcome Poster</string>
+    <string name="build_confidence">Build Confidence</string>
+    <string name="for_your_dmv_test">for Your DMV Test</string>
+    <string name="next">Next</string>
+    <string name="practice_exam_questions">Practice exam questions</string>
 </resources>

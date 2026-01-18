@@ -4,9 +4,10 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.sean.permitly.presentation.onboarding.OnBoardingTags
 import com.sean.permitly.presentation.onboarding.OnBoardingViewModel
+import com.sean.permitly.presentation.onboarding.welcome.WelcomeScreen
 import com.sean.permitly.presentation.onboarding.Step
-import com.sean.permitly.presentation.onboarding.WelcomeScreen
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -26,7 +27,7 @@ class WelcomeScreenTest {
         }
 
         composeTestRule
-            .onNodeWithTag("NEXT_BUTTON")
+            .onNodeWithTag(OnBoardingTags.NEXT_BUTTON)
             .performClick()
 
         assertEquals(Step.AGREEMENT, viewModel.state.value.step)

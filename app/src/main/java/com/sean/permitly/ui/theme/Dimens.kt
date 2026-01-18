@@ -7,11 +7,10 @@ object Dimens {
     val sm = 8.dp
 
     val md = 12.dp
-    val lg = 16.dp
+    val lg = 20.dp
 
     val xl = 24.dp
     val xxl = 32.dp
 
-    val screenHorizontal = 16.dp
-    val screenVertical = 24.dp
+    val xxxl = 55.dp
 }
