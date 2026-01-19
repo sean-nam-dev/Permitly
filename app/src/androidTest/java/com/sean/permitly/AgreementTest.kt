@@ -10,7 +10,6 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.sean.permitly.presentation.onboarding.OnBoardingTags
 import com.sean.permitly.presentation.onboarding.Step
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
