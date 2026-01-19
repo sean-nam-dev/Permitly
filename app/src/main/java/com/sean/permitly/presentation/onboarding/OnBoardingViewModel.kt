@@ -29,9 +29,18 @@ class OnBoardingViewModel : ViewModel(), OnBoardingAction {
                 _state.update { it.copy(step = Step.AGREEMENT) }
                 emitNavigation()
             }
-            Step.AGREEMENT -> {}
+            Step.AGREEMENT -> {
+                if (_state.value.isAgreementAccepted) {
+                    _state.update { it.copy(step = Step.STATES) }
+                    emitNavigation()
+                }
+            }
             Step.STATES -> {}
         }
+    }
+
+    override fun onAgreementClick(value: Boolean) {
+        _state.update { it.copy(isAgreementAccepted = value) }
     }
 
     private fun emitNavigation() {

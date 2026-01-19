@@ -11,6 +11,8 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sean.permitly.presentation.onboarding.Step
+import com.sean.permitly.presentation.onboarding.agreement.AgreementTags
+import com.sean.permitly.presentation.onboarding.agreement.AgreementUI
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
