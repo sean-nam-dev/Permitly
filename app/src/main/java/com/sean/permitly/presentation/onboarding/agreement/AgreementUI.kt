@@ -43,7 +43,7 @@ import com.sean.permitly.ui.theme.PermitlyTheme
 @Composable
 fun AgreementUI(
     isAgreementAccepted: Boolean,
-    onAgreementClick: (Boolean) -> Unit,
+    onAgreementClick: () -> Unit,
     onNextClick: () -> Unit
 ) {
     val agreementTitles = stringArrayResource(R.array.agreement_titles)
@@ -102,7 +102,7 @@ fun AgreementUI(
                 .clip(RoundedCornerShape(Dimens.xs))
                 .clickable(
                     onClick = {
-                        onAgreementClick(!isAgreementAccepted)
+                        onAgreementClick()
                     }
                 ),
             horizontalArrangement = Arrangement.spacedBy(Dimens.sm)
@@ -150,8 +150,8 @@ private fun AgreementUIPreview() {
     var isAgreementAccepted by remember {
         mutableStateOf(false)
     }
-    val onAgreementClick: (Boolean) -> Unit = {
-        isAgreementAccepted = it
+    val onAgreementClick: () -> Unit = {
+        isAgreementAccepted = !isAgreementAccepted
     }
 
     PermitlyTheme {

@@ -55,8 +55,8 @@ class AgreementTest {
     @Test
     fun agreementCheckboxStateChanges() {
         var isAgreementAccepted by mutableStateOf(false)
-        val onAgreementClick: (Boolean) -> Unit = {
-            isAgreementAccepted = it
+        val onAgreementClick: () -> Unit = {
+            isAgreementAccepted = !isAgreementAccepted
         }
 
         composeTestRule.setContent {

@@ -40,7 +40,7 @@ class OnBoardingViewModelTest {
     fun `onAgreementClick changes isAgreementAccepted from false to true`() {
         val viewModel = OnBoardingViewModel()
         viewModel.onNextClick()
-        viewModel.onAgreementClick(true)
+        viewModel.onAgreementClick()
         assertTrue(viewModel.state.value.isAgreementAccepted)
     }
 
@@ -56,7 +56,7 @@ class OnBoardingViewModelTest {
     fun `onNextClick changes step from agreement to states`() = runTest {
         val viewModel = OnBoardingViewModel()
         viewModel.onNextClick()
-        viewModel.onAgreementClick(true)
+        viewModel.onAgreementClick()
         viewModel.onNextClick()
         assertEquals(Step.STATES, viewModel.state.value.step)
     }

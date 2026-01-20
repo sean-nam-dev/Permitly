@@ -38,8 +38,8 @@ class OnBoardingViewModel : ViewModel(), OnBoardingAction {
         }
     }
 
-    override fun onAgreementClick(value: Boolean) {
-        _state.update { it.copy(isAgreementAccepted = value) }
+    override fun onAgreementClick() {
+        _state.update { it.copy(isAgreementAccepted = !it.isAgreementAccepted) }
     }
 
     private fun emitNavigation() {
