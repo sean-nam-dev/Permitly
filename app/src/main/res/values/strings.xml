@@ -5,4 +5,33 @@
     <string name="for_your_dmv_test">for Your DMV Test</string>
     <string name="next">Next</string>
     <string name="practice_exam_questions">Practice exam questions</string>
+    <string name="privacy_and_terms">Privacy &amp; Terms</string>
+    <string name="i_understand_this_app">I understand this app is educational only, not affiliated with the DMV, and uses my email only for optional cloud sync and crash analytics</string>
+    
+    
+    
+    
+    <string-array name="agreement_titles">
+        <item>Privacy Policy</item>
+        <item>Terms of Use</item>
+    </string-array>
+    <string-array name="agreement_texts">
+        <item>
+            This application collects limited personal information only to support specific features.
+
+            An email address may be collected solely to enable cloud synchronization of user progress and settings across devices. Users can choose not to use this feature, in which case no email is required. The email is not used for marketing, advertising, or communication purposes.
+
+            The app also collects crash and performance analytics data to identify errors, improve stability, and enhance the overall user experience. This data may include technical information such as device type, operating system version, app version, and error logs. No personal content is included in crash analytics.
+
+            Personal data is not sold, rented, or shared with third parties, except when required to operate essential services such as cloud synchronization or crash reporting tools.
+
+            Reasonable technical measures are taken to protect user data. Users may request deletion of their personal information by contacting the developer.
+
+            By using this application, you consent to the collection and use of data as described in this Privacy Policy.
+        </item>
+        <item>
+            This application is provided for educational and practice purposes only. All questions, exams, and content in this app are simulated and are not official DMV materials. This app is not affiliated with, endorsed by, or approved by any government agency, including the Department of Motor Vehicles (DMV).
+            The app does not guarantee passing any permit or licensing exam and should be used as a supplementary study tool, not as a replacement for official DMV materials. The developer assumes no responsibility for any inaccuracies, errors, or outcomes resulting from the use of this application.
+        </item>
+    </string-array>
 </resources>

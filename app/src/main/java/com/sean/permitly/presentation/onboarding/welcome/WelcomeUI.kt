@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -26,6 +27,7 @@ import com.sean.permitly.presentation.component.NavigationProgress
 import com.sean.permitly.presentation.component.PrimaryButton
 import com.sean.permitly.presentation.onboarding.Step
 import com.sean.permitly.ui.theme.Dimens
+import com.sean.permitly.ui.theme.Elevation
 import com.sean.permitly.ui.theme.PermitlyTheme
 
 @Composable
@@ -42,6 +44,13 @@ fun WelcomeUI(
             contentDescription = stringResource(R.string.welcome_poster),
             modifier = Modifier.fillMaxWidth()
                 .fillMaxHeight(0.6f)
+                .shadow(
+                    elevation = Elevation.standard,
+                    shape = RoundedCornerShape(
+                        bottomStart = Dimens.xxxl,
+                        bottomEnd = Dimens.xxxl
+                    )
+                )
                 .clip(
                     RoundedCornerShape(
                         bottomStart = Dimens.xxxl,
