@@ -1,9 +1,9 @@
 package com.sean.permitly
 
 import com.sean.permitly.presentation.onboarding.OnBoardingViewModel
-import com.sean.permitly.presentation.onboarding.Step
+import com.sean.permitly.presentation.onboarding.util.Step
+import com.sean.permitly.presentation.onboarding.util.State
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -76,7 +76,7 @@ class OnBoardingViewModelTest {
         viewModel.onNextClick()
         viewModel.onAgreementClick()
         viewModel.onNextClick()
-        viewModel.onRadioClick(States.TX)
+        viewModel.onRadioClick(State.NJ)
         assertEquals(State.NJ, viewModel.state.value.examState)
     }
 

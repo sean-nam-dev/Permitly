@@ -2,6 +2,8 @@ package com.sean.permitly.presentation.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sean.permitly.presentation.onboarding.util.State
+import com.sean.permitly.presentation.onboarding.util.Step
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,12 +36,22 @@ class OnBoardingViewModel : ViewModel(), OnBoardingAction {
                     emitNavigation()
                 }
             }
-            Step.STATES -> {}
+            Step.STATES -> {
+                if (_state.value.examState != null) {
+                    _state.update { it.copy(step = Step.LOGIN) }
+                    emitNavigation()
+                }
+            }
+            Step.LOGIN -> {}
         }
     }
 
     override fun onAgreementClick() {
         _state.update { it.copy(isAgreementAccepted = !it.isAgreementAccepted) }
+    }
+
+    override fun onRadioClick(state: State) {
+        _state.update { it.copy(examState = state) }
     }
 
     private fun emitNavigation() {

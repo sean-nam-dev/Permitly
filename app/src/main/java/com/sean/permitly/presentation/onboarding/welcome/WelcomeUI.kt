@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.sean.permitly.R
 import com.sean.permitly.presentation.component.NavigationProgress
 import com.sean.permitly.presentation.component.PrimaryButton
-import com.sean.permitly.presentation.onboarding.Step
+import com.sean.permitly.presentation.onboarding.util.Step
 import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.Elevation
 import com.sean.permitly.ui.theme.PermitlyTheme
