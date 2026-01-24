@@ -10,7 +10,11 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToKey
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.sean.permitly.presentation.onboarding.states.StatesTags
+import com.sean.permitly.presentation.onboarding.states.StatesUI
 import com.sean.permitly.presentation.onboarding.util.Step
+import com.sean.permitly.presentation.onboarding.util.State
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
@@ -25,7 +29,6 @@ class StatesTest {
     fun getStartedButtonIsDisabled() {
         composeTestRule.setContent {
             StatesUI(
-                stateList = State.entries,
                 examState = null,
                 onRadioClick = {},
                 onNextClick = {}
@@ -40,7 +43,6 @@ class StatesTest {
     fun getStartedButtonIsEnabled() {
         composeTestRule.setContent {
             StatesUI(
-                stateList = State.entries,
                 examState = State.NJ,
                 onRadioClick = {},
                 onNextClick = {}
@@ -60,7 +62,6 @@ class StatesTest {
 
         composeTestRule.setContent {
             StatesUI(
-                stateList = State.entries,
                 examState = currentExamState,
                 onRadioClick = {
                     onCurrentExamState(State.NJ)
@@ -89,7 +90,6 @@ class StatesTest {
 
         composeTestRule.setContent {
             StatesUI(
-                stateList = State.entries,
                 examState = currentExamState,
                 onRadioClick = {
                     onCurrentExamStateChange(State.NJ)

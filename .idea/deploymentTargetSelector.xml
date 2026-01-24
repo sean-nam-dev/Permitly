@@ -8,10 +8,10 @@
       <SelectionState runConfigName="AgreementTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="AgreementUIPreview">
+      <SelectionState runConfigName="AgreementScreenPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="AgreementScreenPreview">
+      <SelectionState runConfigName="StatesTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

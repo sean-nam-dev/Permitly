@@ -7,9 +7,11 @@
     <string name="practice_exam_questions">Practice exam questions</string>
     <string name="privacy_and_terms">Privacy &amp; Terms</string>
     <string name="i_understand_this_app">I understand this app is educational only, not affiliated with the DMV, and uses my email only for optional cloud sync and crash analytics</string>
-    
-    
-    
+
+    <string name="new_york">New York</string>
+    <string name="new_jersey">New Jersey</string>
+    <string name="texas">Texas</string>
+
     
     <string-array name="agreement_titles">
         <item>Privacy Policy</item>
