@@ -7,7 +7,7 @@ import com.sean.permitly.R
 enum class State {
     NJ,
     NY,
-    TX
+    TX,
 }
 
 @Composable

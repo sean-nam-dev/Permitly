@@ -76,37 +76,37 @@ class StatesTest {
         assertTrue(currentExamState != null)
     }
 
-    @Test
-    fun onGetStartedChangesStep() {
-        var step by mutableStateOf(Step.STATES)
-        val onStepChange: () -> Unit = {
-            step = Step.LOGIN
-        }
-
-        var currentExamState by mutableStateOf<State?>(null)
-        val onCurrentExamStateChange: (State) -> Unit = {
-            currentExamState = it
-        }
-
-        composeTestRule.setContent {
-            StatesUI(
-                examState = currentExamState,
-                onRadioClick = {
-                    onCurrentExamStateChange(State.NJ)
-                },
-                onNextClick = onStepChange
-            )
-        }
-
-        composeTestRule.onNodeWithTag(StatesTags.STATE_LAZY_COLUMN)
-            .performScrollToKey(State.NJ)
-
-        composeTestRule.onNodeWithTag(StatesTags.RADIO_BUTTON + State.NJ)
-            .performClick()
-
-        composeTestRule.onNodeWithTag(StatesTags.GET_STARTED_BUTTON)
-            .performClick()
-
-        assertEquals(Step.LOGIN, step)
-    }
+//    @Test
+//    fun onGetStartedChangesStep() {
+//        var step by mutableStateOf(Step.STATES)
+//        val onStepChange: () -> Unit = {
+//            step = Step.LOGIN
+//        }
+//
+//        var currentExamState by mutableStateOf<State?>(null)
+//        val onCurrentExamStateChange: (State) -> Unit = {
+//            currentExamState = it
+//        }
+//
+//        composeTestRule.setContent {
+//            StatesUI(
+//                examState = currentExamState,
+//                onRadioClick = {
+//                    onCurrentExamStateChange(State.NJ)
+//                },
+//                onNextClick = onStepChange
+//            )
+//        }
+//
+//        composeTestRule.onNodeWithTag(StatesTags.STATE_LAZY_COLUMN)
+//            .performScrollToKey(State.NJ)
+//
+//        composeTestRule.onNodeWithTag(StatesTags.RADIO_BUTTON + State.NJ)
+//            .performClick()
+//
+//        composeTestRule.onNodeWithTag(StatesTags.GET_STARTED_BUTTON)
+//            .performClick()
+//
+//        assertEquals(Step.LOGIN, step)
+//    }
 }

@@ -38,11 +38,9 @@ class OnBoardingViewModel : ViewModel(), OnBoardingAction {
             }
             Step.STATES -> {
                 if (_state.value.examState != null) {
-                    _state.update { it.copy(step = Step.LOGIN) }
                     emitNavigation()
                 }
             }
-            Step.LOGIN -> {}
         }
     }
 

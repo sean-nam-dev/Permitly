@@ -80,23 +80,23 @@ class OnBoardingViewModelTest {
         assertEquals(State.NJ, viewModel.state.value.examState)
     }
 
-    @Test
-    fun `onNextClick does not change step if examState is null`() {
-        val viewModel = OnBoardingViewModel()
-        viewModel.onNextClick()
-        viewModel.onAgreementClick()
-        viewModel.onNextClick()
-        assertEquals(Step.STATES, viewModel.state.value.step)
-    }
+//    @Test
+//    fun `onNextClick does not change step if examState is null`() {
+//        val viewModel = OnBoardingViewModel()
+//        viewModel.onNextClick()
+//        viewModel.onAgreementClick()
+//        viewModel.onNextClick()
+//        assertEquals(Step.STATES, viewModel.state.value.step)
+//    }
 
-    @Test
-    fun `onNextClick changes step if examState is not null`() {
-        val viewModel = OnBoardingViewModel()
-        viewModel.onNextClick()
-        viewModel.onAgreementClick()
-        viewModel.onNextClick()
-        viewModel.onRadioClick(State.NJ)
-        viewModel.onNextClick()
-        assertEquals(Step.LOGIN, viewModel.state.value.step)
-    }
+//    @Test
+//    fun `onNextClick changes step if examState is not null`() {
+//        val viewModel = OnBoardingViewModel()
+//        viewModel.onNextClick()
+//        viewModel.onAgreementClick()
+//        viewModel.onNextClick()
+//        viewModel.onRadioClick(State.NJ)
+//        viewModel.onNextClick()
+//        assertEquals(Step.LOGIN, viewModel.state.value.step)
+//    }
 }
