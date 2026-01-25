@@ -12,8 +12,7 @@ fun AgreementScreen(viewModel: OnBoardingViewModel) {
 
     AgreementUI(
         isAgreementAccepted = state.value.isAgreementAccepted,
-        onAgreementClick = viewModel::onAgreementClick,
-        onNextClick = viewModel::onNextClick
+        onAgreementClick = viewModel::onAgreementClick
     )
 }
 

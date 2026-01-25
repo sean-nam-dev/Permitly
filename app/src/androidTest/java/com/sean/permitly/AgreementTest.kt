@@ -29,8 +29,7 @@ class AgreementTest {
         composeTestRule.setContent {
             AgreementUI(
                 isAgreementAccepted = false,
-                onAgreementClick = { },
-                onNextClick = { }
+                onAgreementClick = { }
             )
         }
 
@@ -43,8 +42,7 @@ class AgreementTest {
         composeTestRule.setContent {
             AgreementUI(
                 isAgreementAccepted = true,
-                onAgreementClick = { },
-                onNextClick = { }
+                onAgreementClick = { }
             )
         }
 
@@ -62,8 +60,7 @@ class AgreementTest {
         composeTestRule.setContent {
             AgreementUI(
                 isAgreementAccepted = isAgreementAccepted,
-                onAgreementClick = onAgreementClick,
-                onNextClick = { }
+                onAgreementClick = onAgreementClick
             )
         }
 
@@ -85,10 +82,7 @@ class AgreementTest {
         composeTestRule.setContent {
             AgreementUI(
                 isAgreementAccepted = true,
-                onAgreementClick = { },
-                onNextClick = {
-                    step = Step.STATES
-                }
+                onAgreementClick = { }
             )
         }
 
