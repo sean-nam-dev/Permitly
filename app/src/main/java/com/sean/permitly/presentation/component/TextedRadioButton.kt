@@ -28,10 +28,10 @@ fun TextedRadioButton(
             .fillMaxWidth()
             .clickable(onClick = onClick)
             .padding(
-                horizontal = Dimens.lg,
-                vertical = Dimens.md
+                horizontal = Dimens.M_0,
+                vertical = Dimens.S_0
             ),
-        horizontalArrangement = Arrangement.spacedBy(Dimens.lg),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.M_0),
         verticalAlignment = Alignment.CenterVertically
     ) {
         RadioButton(

@@ -6,7 +6,7 @@
     <string name="next">Next</string>
     <string name="practice_exam_questions">Practice exam questions</string>
     <string name="privacy_and_terms">Privacy &amp; Terms</string>
-    <string name="i_understand_this_app">I understand this app is educational only, not affiliated with the DMV, and uses my email only for optional cloud sync and crash analytics</string>
+    <string name="i_understand">I understand</string>
     <string name="choose_state">Choose State</string>
     <string name="you_can_change">You can change this later in settings</string>
     <string name="get_started">Get started</string>

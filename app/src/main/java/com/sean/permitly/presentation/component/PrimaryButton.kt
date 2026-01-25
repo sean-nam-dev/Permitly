@@ -25,7 +25,7 @@ fun PrimaryButton(
     Button(
         onClick = onClick,
         modifier = modifier.fillMaxWidth()
-            .height(Dimens.xxxl),
+            .height(Dimens.XXL_5),
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
