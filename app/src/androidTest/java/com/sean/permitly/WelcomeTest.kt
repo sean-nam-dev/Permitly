@@ -26,9 +26,7 @@ class WelcomeTest {
 
         composeTestRule.setContent {
             WelcomeUI(
-                onNextClick = {
-                    step = Step.AGREEMENT
-                }
+
             )
         }
 

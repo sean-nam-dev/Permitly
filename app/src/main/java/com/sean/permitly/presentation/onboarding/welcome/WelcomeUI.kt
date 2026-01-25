@@ -1,10 +1,8 @@
 package com.sean.permitly.presentation.onboarding.welcome
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,48 +11,40 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.sean.permitly.R
-import com.sean.permitly.presentation.component.NavigationProgress
-import com.sean.permitly.presentation.component.PrimaryButton
-import com.sean.permitly.presentation.onboarding.util.Step
-import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.Elevation
+import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.PermitlyTheme
 
 @Composable
-fun WelcomeUI(
-    onNextClick: () -> Unit
-) {
+fun WelcomeUI() {
     Column(
-        modifier = Modifier.fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.spacedBy(Dimens.xl)
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(Dimens.M_0)
     ) {
         Image(
             painter = painterResource(R.drawable.welcome_poster),
             contentDescription = stringResource(R.string.welcome_poster),
             modifier = Modifier.fillMaxWidth()
-                .fillMaxHeight(0.6f)
+                .fillMaxHeight(0.8f)
                 .shadow(
                     elevation = Elevation.standard,
                     shape = RoundedCornerShape(
-                        bottomStart = Dimens.xxxl,
-                        bottomEnd = Dimens.xxxl
+                        bottomStart = Dimens.L_0,
+                        bottomEnd = Dimens.L_0
                     )
                 )
                 .clip(
                     RoundedCornerShape(
-                        bottomStart = Dimens.xxxl,
-                        bottomEnd = Dimens.xxxl
+                        bottomStart = Dimens.L_0,
+                        bottomEnd = Dimens.L_0
                     )
                 ),
             contentScale = ContentScale.Crop
@@ -62,7 +52,7 @@ fun WelcomeUI(
 
         Column(
             modifier = Modifier.fillMaxSize()
-                .padding(Dimens.xl)
+                .padding(Dimens.M_0)
         ) {
             Text(
                 text = stringResource(R.string.build_confidence),
@@ -76,27 +66,10 @@ fun WelcomeUI(
             )
             Text(
                 text = stringResource(R.string.practice_exam_questions),
-                modifier = Modifier.padding(top = Dimens.md),
+                modifier = Modifier.padding(top = Dimens.S_0),
                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
                 style = MaterialTheme.typography.bodyLarge
             )
-            Spacer(modifier = Modifier.weight(1f))
-            Column(
-                verticalArrangement = Arrangement.spacedBy(Dimens.xl),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                NavigationProgress(
-                    size = Step.entries.size,
-                    currentIndex = Step.entries.indexOf(Step.WELCOME)
-                )
-                PrimaryButton(
-                    onClick = onNextClick,
-                    modifier = Modifier.testTag(WelcomeTags.NEXT_BUTTON)
-                        .padding(bottom = Dimens.xl),
-                    enabled = true,
-                    text = stringResource(R.string.next)
-                )
-            }
         }
     }
 }
@@ -105,8 +78,6 @@ fun WelcomeUI(
 @Composable
 private fun WelcomeUIPreview() {
     PermitlyTheme {
-        WelcomeUI(
-            onNextClick = {}
-        )
+        WelcomeUI()
     }
 }

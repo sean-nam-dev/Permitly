@@ -21,7 +21,7 @@ fun WelcomeScreen(viewModel: OnBoardingViewModel) {
     }
 
     WelcomeUI(
-        onNextClick = viewModel::onNextClick
+
     )
 }
 
