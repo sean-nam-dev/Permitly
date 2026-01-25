@@ -12,8 +12,7 @@ fun StatesScreen(viewModel: OnBoardingViewModel) {
 
     StatesUI(
         examState = state.value.examState,
-        onRadioClick = viewModel::onRadioClick,
-        onNextClick = viewModel::onNextClick
+        onRadioClick = viewModel::onRadioClick
     )
 }
 

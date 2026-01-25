@@ -30,8 +30,7 @@ class StatesTest {
         composeTestRule.setContent {
             StatesUI(
                 examState = null,
-                onRadioClick = {},
-                onNextClick = {}
+                onRadioClick = {}
             )
         }
 
@@ -44,8 +43,7 @@ class StatesTest {
         composeTestRule.setContent {
             StatesUI(
                 examState = State.NJ,
-                onRadioClick = {},
-                onNextClick = {}
+                onRadioClick = {}
             )
         }
 
@@ -65,8 +63,7 @@ class StatesTest {
                 examState = currentExamState,
                 onRadioClick = {
                     onCurrentExamState(State.NJ)
-                },
-                onNextClick = {}
+                }
             )
         }
 
