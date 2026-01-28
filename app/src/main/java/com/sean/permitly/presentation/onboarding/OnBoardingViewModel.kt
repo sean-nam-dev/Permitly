@@ -27,8 +27,28 @@ class OnBoardingViewModel : ViewModel(), OnBoardingAction {
         get() = _event
 
     override fun onNextClick() {
-        viewModelScope.launch {
-            _event.emit(OnBoardingEvent.Navigate)
+        when (_state.value.step) {
+            Step.WELCOME -> {
+                _state.update { it.copy(step = Step.AGREEMENT) }
+                viewModelScope.launch {
+                    _event.emit(OnBoardingEvent.Navigate)
+                }
+            }
+            Step.AGREEMENT -> {
+                if (_state.value.isAgreementAccepted) {
+                    _state.update { it.copy(step = Step.STATES) }
+                    viewModelScope.launch {
+                        _event.emit(OnBoardingEvent.Navigate)
+                    }
+                }
+            }
+            Step.STATES -> {
+                if (_state.value.examState != null) {
+                    viewModelScope.launch {
+                        _event.emit(OnBoardingEvent.Navigate)
+                    }
+                }
+            }
         }
     }
 
@@ -38,9 +58,5 @@ class OnBoardingViewModel : ViewModel(), OnBoardingAction {
 
     override fun onRadioClick(state: State) {
         _state.update { it.copy(examState = state) }
-    }
-
-    override fun changeStep(step: Step) {
-        _state.update { it.copy(step = step) }
     }
 }

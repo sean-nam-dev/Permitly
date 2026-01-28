@@ -24,10 +24,8 @@ fun OnBoardingScreen(
             when (event) {
                 OnBoardingEvent.Navigate -> {
                     if (pagerState.currentPage < pagerState.pageCount - 1) {
-                        val targetPage = pagerState.currentPage + 1
-                        viewModel.changeStep(Step.entries[targetPage])
                         pagerState.animateScrollToPage(
-                            page = targetPage,
+                            page = pagerState.currentPage + 1,
                             animationSpec = spring(
                                 stiffness = Spring.StiffnessLow
                             )
