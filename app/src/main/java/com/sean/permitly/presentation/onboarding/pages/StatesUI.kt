@@ -1,4 +1,4 @@
-package com.sean.permitly.presentation.onboarding.states
+package com.sean.permitly.presentation.onboarding.pages
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.sean.permitly.R
 import com.sean.permitly.presentation.component.TextedRadioButton
+import com.sean.permitly.presentation.onboarding.util.OnBoardingTags
 import com.sean.permitly.presentation.onboarding.util.State
 import com.sean.permitly.presentation.onboarding.util.displayName
 import com.sean.permitly.ui.theme.Elevation
@@ -68,7 +69,8 @@ fun StatesUI(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 LazyColumn(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.testTag(OnBoardingTags.States.LAZY_COLUMN)
+                        .weight(1f),
                     contentPadding = PaddingValues(top = Dimens.S_0)
                 ) {
                     items(
@@ -76,7 +78,7 @@ fun StatesUI(
                         key = { it }
                     ) {
                         TextedRadioButton(
-                            modifier = Modifier.testTag(StatesTags.RADIO_BUTTON + it),
+                            modifier = Modifier.testTag(OnBoardingTags.States.RADIO_BUTTON + it),
                             text = it.displayName(),
                             selected = it == examState,
                             onClick = {

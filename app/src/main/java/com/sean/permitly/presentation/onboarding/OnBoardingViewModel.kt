@@ -7,6 +7,7 @@ import com.sean.permitly.presentation.onboarding.util.Step
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
@@ -22,25 +23,12 @@ class OnBoardingViewModel : ViewModel(), OnBoardingAction {
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
-    val event = _event.asSharedFlow()
+    val event: SharedFlow<OnBoardingEvent>
+        get() = _event
 
     override fun onNextClick() {
-        when (_state.value.step) {
-            Step.WELCOME -> {
-                _state.update { it.copy(step = Step.AGREEMENT) }
-                emitNavigation()
-            }
-            Step.AGREEMENT -> {
-                if (_state.value.isAgreementAccepted) {
-                    _state.update { it.copy(step = Step.STATES) }
-                    emitNavigation()
-                }
-            }
-            Step.STATES -> {
-                if (_state.value.examState != null) {
-                    emitNavigation()
-                }
-            }
+        viewModelScope.launch {
+            _event.emit(OnBoardingEvent.Navigate)
         }
     }
 
@@ -52,9 +40,7 @@ class OnBoardingViewModel : ViewModel(), OnBoardingAction {
         _state.update { it.copy(examState = state) }
     }
 
-    private fun emitNavigation() {
-        viewModelScope.launch {
-            _event.emit(OnBoardingEvent.Navigate)
-        }
+    override fun changeStep(step: Step) {
+        _state.update { it.copy(step = step) }
     }
 }

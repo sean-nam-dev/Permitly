@@ -1,4 +1,4 @@
-package com.sean.permitly.presentation.onboarding.welcome
+package com.sean.permitly.presentation.onboarding.pages
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

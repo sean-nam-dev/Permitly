@@ -14,16 +14,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sean.permitly.R
 import com.sean.permitly.presentation.component.NavigationProgress
 import com.sean.permitly.presentation.component.PrimaryButton
-import com.sean.permitly.presentation.onboarding.agreement.AgreementUI
-import com.sean.permitly.presentation.onboarding.states.StatesUI
+import com.sean.permitly.presentation.onboarding.pages.AgreementUI
+import com.sean.permitly.presentation.onboarding.pages.StatesUI
 import com.sean.permitly.presentation.onboarding.util.Step
-import com.sean.permitly.presentation.onboarding.welcome.WelcomeUI
+import com.sean.permitly.presentation.onboarding.pages.WelcomeUI
+import com.sean.permitly.presentation.onboarding.util.OnBoardingTags
 import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.PermitlyTheme
 
@@ -44,8 +46,10 @@ fun OnBoardingScreen(
             when (event) {
                 OnBoardingEvent.Navigate -> {
                     if (pagerState.currentPage < pagerState.pageCount - 1) {
+                        val targetPage = pagerState.currentPage + 1
+                        viewModel.changeStep(Step.entries[targetPage])
                         pagerState.animateScrollToPage(
-                            page = pagerState.currentPage + 1,
+                            page = targetPage,
                             animationSpec = spring(
                                 stiffness = Spring.StiffnessLow
                             )
@@ -90,11 +94,12 @@ fun OnBoardingScreen(
 
         PrimaryButton(
             onClick = viewModel::onNextClick,
-            modifier = Modifier.padding(
-                start = Dimens.M_0,
-                end = Dimens.M_0,
-                bottom = Dimens.L_0
-            ),
+            modifier = Modifier.testTag(OnBoardingTags.NAVIGATION_BUTTON)
+                .padding(
+                    start = Dimens.M_0,
+                    end = Dimens.M_0,
+                    bottom = Dimens.L_0
+                ),
             enabled = primaryButtonData.first,
             text = primaryButtonData.second
         )

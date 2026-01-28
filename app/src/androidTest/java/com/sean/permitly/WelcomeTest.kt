@@ -9,7 +9,7 @@ import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sean.permitly.presentation.onboarding.util.Step
 import com.sean.permitly.presentation.onboarding.welcome.WelcomeTags
-import com.sean.permitly.presentation.onboarding.welcome.WelcomeUI
+import com.sean.permitly.presentation.onboarding.pages.WelcomeUI
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
