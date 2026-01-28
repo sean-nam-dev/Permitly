@@ -1,4 +1,4 @@
-package com.sean.permitly.presentation.onboarding.pages
+package com.sean.permitly.presentation.onboarding.pages.states
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,10 +36,7 @@ import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.PermitlyTheme
 
 @Composable
-fun StatesUI(
-    examState: State?,
-    onRadioClick: (State) -> Unit
-) {
+fun StatesPage(statesPageData: StatesPageData) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.fillMaxWidth()
@@ -80,9 +77,9 @@ fun StatesUI(
                         TextedRadioButton(
                             modifier = Modifier.testTag(OnBoardingTags.States.RADIO_BUTTON + it),
                             text = it.displayName(),
-                            selected = it == examState,
+                            selected = it == statesPageData.examState,
                             onClick = {
-                                onRadioClick(it)
+                                statesPageData.onRadioClick(it)
                             }
                         )
                     }
@@ -106,16 +103,18 @@ fun StatesUI(
 
 @Preview
 @Composable
-private fun StatesUIPreview() {
+private fun StatesPagePreview() {
     var examState by remember { mutableStateOf<State?>(null) }
     val onRadioClick: (State) -> Unit = {
         examState = it
     }
 
     PermitlyTheme {
-        StatesUI(
-            examState = examState,
-            onRadioClick = onRadioClick
+        StatesPage(
+            statesPageData = StatesPageData(
+                examState = examState,
+                onRadioClick = onRadioClick
+            )
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.sean.permitly.presentation.onboarding.pages
+package com.sean.permitly.presentation.onboarding.pages.agreement
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,10 +34,7 @@ import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.PermitlyTheme
 
 @Composable
-fun AgreementUI(
-    isAgreementAccepted: Boolean,
-    onAgreementClick: () -> Unit
-) {
+fun AgreementPage(agreementPageData: AgreementPageData) {
     val agreementTitles = stringArrayResource(R.array.agreement_titles)
     val agreementTexts = stringArrayResource(R.array.agreement_texts)
 
@@ -95,15 +92,15 @@ fun AgreementUI(
         TextedCheckbox(
             modifier = Modifier.testTag(OnBoardingTags.Agreement.CHECKBOX),
             text = stringResource(R.string.i_understand),
-            checked = isAgreementAccepted,
-            onClick = onAgreementClick
+            checked = agreementPageData.isAgreementAccepted,
+            onClick = agreementPageData.onAgreementClick
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun AgreementUIPreview() {
+private fun AgreementPagePreview() {
     var isAgreementAccepted by remember {
         mutableStateOf(false)
     }
@@ -112,9 +109,11 @@ private fun AgreementUIPreview() {
     }
 
     PermitlyTheme {
-        AgreementUI(
-            isAgreementAccepted = isAgreementAccepted,
-            onAgreementClick = onAgreementClick
+        AgreementPage(
+            AgreementPageData(
+                isAgreementAccepted = isAgreementAccepted,
+                onAgreementClick = onAgreementClick
+            )
         )
     }
 }

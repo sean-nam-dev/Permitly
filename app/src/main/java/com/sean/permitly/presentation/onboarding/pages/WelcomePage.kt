@@ -24,7 +24,7 @@ import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.PermitlyTheme
 
 @Composable
-fun WelcomeUI() {
+fun WelcomePage() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(Dimens.M_0)
@@ -76,8 +76,8 @@ fun WelcomeUI() {
 
 @Preview(showBackground = true)
 @Composable
-private fun WelcomeUIPreview() {
+private fun WelcomePagePreview() {
     PermitlyTheme {
-        WelcomeUI()
+        WelcomePage()
     }
 }
