@@ -13,11 +13,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class OnBoardingViewModel(
+class OnboardingViewModel(
     savedStateHandle: SavedStateHandle
-) : ViewModel(), OnBoardingAction {
+) : ViewModel(), OnboardingAction {
     private val _state = MutableStateFlow(
-        OnBoardingState(
+        OnboardingState(
             step = Step.fromKey(
                 savedStateHandle["step"] ?: Step.WELCOME.key
             ),
@@ -27,15 +27,15 @@ class OnBoardingViewModel(
             )
         )
     )
-    val state: StateFlow<OnBoardingState>
+    val state: StateFlow<OnboardingState>
         get() = _state
 
-    private val _event = MutableSharedFlow<OnBoardingEvent>(
+    private val _event = MutableSharedFlow<OnboardingEvent>(
         replay = 0,
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
-    val event: SharedFlow<OnBoardingEvent>
+    val event: SharedFlow<OnboardingEvent>
         get() = _event
 
     override fun onNextClick() {
@@ -43,21 +43,21 @@ class OnBoardingViewModel(
             Step.WELCOME -> {
                 _state.update { it.copy(step = Step.AGREEMENT) }
                 viewModelScope.launch {
-                    _event.emit(OnBoardingEvent.Navigate)
+                    _event.emit(OnboardingEvent.Navigate)
                 }
             }
             Step.AGREEMENT -> {
                 if (_state.value.isAgreementAccepted) {
                     _state.update { it.copy(step = Step.STATES) }
                     viewModelScope.launch {
-                        _event.emit(OnBoardingEvent.Navigate)
+                        _event.emit(OnboardingEvent.Navigate)
                     }
                 }
             }
             Step.STATES -> {
                 if (_state.value.examState != State.NONE) {
                     viewModelScope.launch {
-                        _event.emit(OnBoardingEvent.Navigate)
+                        _event.emit(OnboardingEvent.Navigate)
                     }
                 }
             }

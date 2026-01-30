@@ -1,6 +1,6 @@
 package com.sean.permitly.presentation.onboarding.util
 
-object OnBoardingTags {
+object OnboardingTags {
     const val NAVIGATION_BUTTON = "NAVIGATION_BUTTON"
 
     object Agreement {

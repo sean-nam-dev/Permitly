@@ -14,8 +14,8 @@ import com.sean.permitly.presentation.onboarding.util.Step
 import com.sean.permitly.ui.theme.PermitlyTheme
 
 @Composable
-fun OnBoardingScreen(
-    viewModel: OnBoardingViewModel
+fun OnboardingScreen(
+    viewModel: OnboardingViewModel
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState { Step.entries.size }
@@ -23,7 +23,7 @@ fun OnBoardingScreen(
     LaunchedEffect(Unit) {
         viewModel.event.collect { event ->
             when (event) {
-                OnBoardingEvent.Navigate -> {
+                OnboardingEvent.Navigate -> {
                     if (pagerState.currentPage < pagerState.pageCount - 1) {
                         pagerState.animateScrollToPage(
                             page = pagerState.currentPage + 1,
@@ -39,7 +39,7 @@ fun OnBoardingScreen(
         }
     }
 
-    OnBoardingUI(
+    OnboardingUI(
         pagerState = pagerState,
         step = state.value.step,
         agreementPageData = AgreementPageData(
@@ -56,10 +56,10 @@ fun OnBoardingScreen(
 
 @Preview
 @Composable
-private fun OnBoardingScreenPreview() {
+private fun OnboardingScreenPreview() {
     PermitlyTheme {
-        OnBoardingScreen(
-            viewModel = OnBoardingViewModel(SavedStateHandle())
+        OnboardingScreen(
+            viewModel = OnboardingViewModel(SavedStateHandle())
         )
     }
 }

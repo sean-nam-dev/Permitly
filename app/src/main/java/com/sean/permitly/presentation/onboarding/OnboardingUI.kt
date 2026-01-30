@@ -23,13 +23,14 @@ import com.sean.permitly.presentation.onboarding.pages.states.StatesPage
 import com.sean.permitly.presentation.onboarding.pages.WelcomePage
 import com.sean.permitly.presentation.onboarding.pages.agreement.AgreementPageData
 import com.sean.permitly.presentation.onboarding.pages.states.StatesPageData
-import com.sean.permitly.presentation.onboarding.util.OnBoardingTags
+import com.sean.permitly.presentation.onboarding.util.OnboardingTags
+import com.sean.permitly.presentation.onboarding.util.State
 import com.sean.permitly.presentation.onboarding.util.Step
 import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.PermitlyTheme
 
 @Composable
-fun OnBoardingUI(
+fun OnboardingUI(
     pagerState: PagerState,
     step: Step,
     agreementPageData: AgreementPageData,
@@ -39,7 +40,7 @@ fun OnBoardingUI(
     val primaryButtonData = when (step) {
         Step.WELCOME -> true to stringResource(R.string.next)
         Step.AGREEMENT -> agreementPageData.isAgreementAccepted to stringResource(R.string.next)
-        Step.STATES -> (statesPageData.examState != null) to stringResource(R.string.get_started)
+        Step.STATES -> (statesPageData.examState != State.NONE) to stringResource(R.string.get_started)
     }
 
     Column(
@@ -68,7 +69,7 @@ fun OnBoardingUI(
 
         PrimaryButton(
             onClick = onNextClick,
-            modifier = Modifier.testTag(OnBoardingTags.NAVIGATION_BUTTON)
+            modifier = Modifier.testTag(OnboardingTags.NAVIGATION_BUTTON)
                 .padding(
                     start = Dimens.M_0,
                     end = Dimens.M_0,
@@ -82,11 +83,11 @@ fun OnBoardingUI(
 
 @Preview
 @Composable
-private fun OnBoardingUIPreview() {
+private fun OnboardingUIPreview() {
     val pagerState = rememberPagerState { Step.entries.size }
 
     PermitlyTheme {
-        OnBoardingUI(
+        OnboardingUI(
             pagerState = pagerState,
             step = Step.WELCOME,
             agreementPageData = AgreementPageData(
@@ -94,7 +95,7 @@ private fun OnBoardingUIPreview() {
                 onAgreementClick = {}
             ),
             statesPageData = StatesPageData(
-                examState = null,
+                examState = State.NONE,
                 onRadioClick = {}
             ),
             onNextClick = {}

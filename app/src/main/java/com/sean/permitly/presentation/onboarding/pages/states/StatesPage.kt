@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.sean.permitly.R
 import com.sean.permitly.presentation.component.TextedRadioButton
-import com.sean.permitly.presentation.onboarding.util.OnBoardingTags
+import com.sean.permitly.presentation.onboarding.util.OnboardingTags
 import com.sean.permitly.presentation.onboarding.util.State
 import com.sean.permitly.presentation.onboarding.util.displayName
 import com.sean.permitly.ui.theme.Elevation
@@ -66,17 +66,17 @@ fun StatesPage(statesPageData: StatesPageData) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 LazyColumn(
-                    modifier = Modifier.testTag(OnBoardingTags.States.LAZY_COLUMN)
+                    modifier = Modifier.testTag(OnboardingTags.States.LAZY_COLUMN)
                         .weight(1f),
                     contentPadding = PaddingValues(top = Dimens.S_0)
                 ) {
                     items(
                         items = State.entries,
-                        key = { it }
+                        key = { it.key }
                     ) {
                         if (it != State.NONE) {
                             TextedRadioButton(
-                                modifier = Modifier.testTag(OnBoardingTags.States.RADIO_BUTTON + it),
+                                modifier = Modifier.testTag(OnboardingTags.States.RADIO_BUTTON + it.key),
                                 text = it.displayName(),
                                 selected = it == statesPageData.examState,
                                 onClick = {
@@ -106,7 +106,7 @@ fun StatesPage(statesPageData: StatesPageData) {
 @Preview
 @Composable
 private fun StatesPagePreview() {
-    var examState by remember { mutableStateOf<State?>(null) }
+    var examState by remember { mutableStateOf<State>(State.NONE) }
     val onRadioClick: (State) -> Unit = {
         examState = it
     }

@@ -1,7 +1,7 @@
 package com.sean.permitly
 
 import androidx.lifecycle.SavedStateHandle
-import com.sean.permitly.presentation.onboarding.OnBoardingViewModel
+import com.sean.permitly.presentation.onboarding.OnboardingViewModel
 import com.sean.permitly.presentation.onboarding.util.Step
 import com.sean.permitly.presentation.onboarding.util.State
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -11,7 +11,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import app.cash.turbine.test
-import com.sean.permitly.presentation.onboarding.OnBoardingEvent
+import com.sean.permitly.presentation.onboarding.OnboardingEvent
 import kotlinx.coroutines.test.runTest
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -22,30 +22,30 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `initial step is welcome`() {
-        val viewModel = OnBoardingViewModel(SavedStateHandle())
+        val viewModel = OnboardingViewModel(SavedStateHandle())
         assertEquals(Step.WELCOME, viewModel.state.value.step)
     }
 
     @Test
     fun `onNextClick changes step from welcome to agreement`() {
-        val viewModel = OnBoardingViewModel(SavedStateHandle())
+        val viewModel = OnboardingViewModel(SavedStateHandle())
         viewModel.onNextClick()
         assertEquals(Step.AGREEMENT, viewModel.state.value.step)
     }
 
     @Test
     fun `onNextClick triggers Navigate event`() = runTest {
-        val viewModel = OnBoardingViewModel(SavedStateHandle())
+        val viewModel = OnboardingViewModel(SavedStateHandle())
         viewModel.event.test {
             viewModel.onNextClick()
-            assertEquals(OnBoardingEvent.Navigate, awaitItem())
+            assertEquals(OnboardingEvent.Navigate, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
     fun `isAgreementAccepted is false by default`() {
-        val viewModel = OnBoardingViewModel(
+        val viewModel = OnboardingViewModel(
             SavedStateHandle(mapOf("step" to Step.AGREEMENT.key))
         )
         assertFalse(viewModel.state.value.isAgreementAccepted)
@@ -53,7 +53,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `onAgreementClick changes isAgreementAccepted from false to true`() {
-        val viewModel = OnBoardingViewModel(
+        val viewModel = OnboardingViewModel(
             SavedStateHandle(mapOf("step" to Step.AGREEMENT.key))
         )
         viewModel.onAgreementClick()
@@ -62,7 +62,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `onNextClick does not change step if isAgreementAccepted is false`() {
-        val viewModel = OnBoardingViewModel(
+        val viewModel = OnboardingViewModel(
             SavedStateHandle(mapOf("step" to Step.AGREEMENT.key))
         )
         viewModel.onNextClick()
@@ -71,7 +71,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `onNextClick does not trigger Navigate event`() = runTest {
-        val viewModel = OnBoardingViewModel(
+        val viewModel = OnboardingViewModel(
             SavedStateHandle(mapOf("step" to Step.AGREEMENT.key))
         )
         viewModel.event.test {
@@ -83,7 +83,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `onNextClick changes step from agreement to states`() = runTest {
-        val viewModel = OnBoardingViewModel(
+        val viewModel = OnboardingViewModel(
             SavedStateHandle(
                 mapOf(
                     "step" to Step.AGREEMENT.key,
@@ -100,7 +100,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `examState is NONE by default`() {
-        val viewModel = OnBoardingViewModel(
+        val viewModel = OnboardingViewModel(
             SavedStateHandle(mapOf("step" to Step.STATES.key))
         )
         assertTrue(viewModel.state.value.examState == State.NONE)
@@ -108,7 +108,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `onRadioClick assigns value to examState`() {
-        val viewModel = OnBoardingViewModel(
+        val viewModel = OnboardingViewModel(
             SavedStateHandle(mapOf("step" to Step.STATES.key))
         )
         viewModel.onRadioClick(State.NJ)
@@ -117,7 +117,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `onNextClick does not trigger navigation if currentState is NONE`() = runTest {
-        val viewModel = OnBoardingViewModel(
+        val viewModel = OnboardingViewModel(
             SavedStateHandle(mapOf("step" to Step.STATES.key))
         )
         viewModel.event.test {
@@ -129,7 +129,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `onNextClick triggers navigation if currentState is not NONE`() = runTest {
-        val viewModel = OnBoardingViewModel(
+        val viewModel = OnboardingViewModel(
             SavedStateHandle(
                 mapOf(
                     "step" to Step.STATES.key,
@@ -139,7 +139,7 @@ class OnBoardingViewModelTest {
         )
         viewModel.event.test {
             viewModel.onNextClick()
-            assertEquals(OnBoardingEvent.Navigate, awaitItem())
+            assertEquals(OnboardingEvent.Navigate, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

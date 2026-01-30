@@ -28,7 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.sean.permitly.R
 import com.sean.permitly.presentation.component.TextedCheckbox
-import com.sean.permitly.presentation.onboarding.util.OnBoardingTags
+import com.sean.permitly.presentation.onboarding.util.OnboardingTags
 import com.sean.permitly.ui.theme.Elevation
 import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.PermitlyTheme
@@ -90,7 +90,7 @@ fun AgreementPage(agreementPageData: AgreementPageData) {
         }
 
         TextedCheckbox(
-            modifier = Modifier.testTag(OnBoardingTags.Agreement.CHECKBOX),
+            modifier = Modifier.testTag(OnboardingTags.Agreement.CHECKBOX),
             text = stringResource(R.string.i_understand),
             checked = agreementPageData.isAgreementAccepted,
             onClick = agreementPageData.onAgreementClick
