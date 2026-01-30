@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class OnboardingViewModel(
-    savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel(), OnboardingAction {
     private val _state = MutableStateFlow(
         OnboardingState(
@@ -42,33 +42,33 @@ class OnboardingViewModel(
         when (_state.value.step) {
             Step.WELCOME -> {
                 _state.update { it.copy(step = Step.AGREEMENT) }
-                viewModelScope.launch {
-                    _event.emit(OnboardingEvent.Navigate)
-                }
             }
             Step.AGREEMENT -> {
-                if (_state.value.isAgreementAccepted) {
-                    _state.update { it.copy(step = Step.STATES) }
-                    viewModelScope.launch {
-                        _event.emit(OnboardingEvent.Navigate)
-                    }
-                }
+                _state.update { it.copy(step = Step.STATES) }
             }
             Step.STATES -> {
-                if (_state.value.examState != State.NONE) {
-                    viewModelScope.launch {
-                        _event.emit(OnboardingEvent.Navigate)
-                    }
-                }
+
             }
         }
+        viewModelScope.launch {
+            _event.emit(OnboardingEvent.Navigate)
+        }
+        update()
     }
 
     override fun onAgreementClick() {
         _state.update { it.copy(isAgreementAccepted = !it.isAgreementAccepted) }
+        update()
     }
 
     override fun onRadioClick(state: State) {
         _state.update { it.copy(examState = state) }
+        update()
+    }
+
+    private fun update() {
+        savedStateHandle["step"] = _state.value.step.key
+        savedStateHandle["agreement"] = _state.value.isAgreementAccepted
+        savedStateHandle["state"] = _state.value.examState.key
     }
 }

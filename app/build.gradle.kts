@@ -42,6 +42,9 @@ android {
 }
 
 dependencies {
+    val lifecycle_version = "2.10.0"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:${lifecycle_version}")
+
     testImplementation("app.cash.turbine:turbine:1.2.1")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
