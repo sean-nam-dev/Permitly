@@ -6,6 +6,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sean.permitly.presentation.onboarding.pages.agreement.AgreementPageData
 import com.sean.permitly.presentation.onboarding.pages.states.StatesPageData
@@ -58,7 +59,7 @@ fun OnBoardingScreen(
 private fun OnBoardingScreenPreview() {
     PermitlyTheme {
         OnBoardingScreen(
-            viewModel = OnBoardingViewModel()
+            viewModel = OnBoardingViewModel(SavedStateHandle())
         )
     }
 }

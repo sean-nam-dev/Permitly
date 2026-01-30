@@ -11,6 +11,7 @@
     <string name="you_can_change">You can change this later in settings</string>
     <string name="get_started">Get started</string>
 
+    <string name="none">None</string>
     <string name="new_york">New York</string>
     <string name="new_jersey">New Jersey</string>
     <string name="texas">Texas</string>

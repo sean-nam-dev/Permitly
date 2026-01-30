@@ -1,5 +1,6 @@
 package com.sean.permitly.presentation.onboarding
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sean.permitly.presentation.onboarding.util.State
@@ -9,12 +10,23 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class OnBoardingViewModel : ViewModel(), OnBoardingAction {
-    private val _state = MutableStateFlow(OnBoardingState())
+class OnBoardingViewModel(
+    savedStateHandle: SavedStateHandle
+) : ViewModel(), OnBoardingAction {
+    private val _state = MutableStateFlow(
+        OnBoardingState(
+            step = Step.fromKey(
+                savedStateHandle["step"] ?: Step.WELCOME.key
+            ),
+            isAgreementAccepted = savedStateHandle["agreement"] ?: false,
+            examState = State.fromKey(
+                savedStateHandle["state"] ?: State.NONE.key
+            )
+        )
+    )
     val state: StateFlow<OnBoardingState>
         get() = _state
 
@@ -43,7 +55,7 @@ class OnBoardingViewModel : ViewModel(), OnBoardingAction {
                 }
             }
             Step.STATES -> {
-                if (_state.value.examState != null) {
+                if (_state.value.examState != State.NONE) {
                     viewModelScope.launch {
                         _event.emit(OnBoardingEvent.Navigate)
                     }
