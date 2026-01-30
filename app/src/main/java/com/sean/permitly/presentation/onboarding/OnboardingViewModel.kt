@@ -18,13 +18,9 @@ class OnboardingViewModel(
 ) : ViewModel(), OnboardingAction {
     private val _state = MutableStateFlow(
         OnboardingState(
-            step = Step.fromKey(
-                savedStateHandle["step"] ?: Step.WELCOME.key
-            ),
-            isAgreementAccepted = savedStateHandle["agreement"] ?: false,
-            examState = State.fromKey(
-                savedStateHandle["state"] ?: State.NONE.key
-            )
+            step = savedStateHandle[STEP] ?: Step.WELCOME,
+            isAgreementAccepted = savedStateHandle[AGREEMENT] ?: false,
+            examState = savedStateHandle[STATE] ?: State.NONE
         )
     )
     val state: StateFlow<OnboardingState>
@@ -42,26 +38,26 @@ class OnboardingViewModel(
         viewModelScope.launch {
             _event.emit(OnboardingEvent.Navigate)
         }
-        update()
     }
 
     override fun onStepChange(step: Step) {
         _state.update { it.copy(step = step) }
+        savedStateHandle[STEP] = _state.value.step
     }
 
     override fun onAgreementClick() {
         _state.update { it.copy(isAgreementAccepted = !it.isAgreementAccepted) }
-        update()
+        savedStateHandle[AGREEMENT] = _state.value.isAgreementAccepted
     }
 
     override fun onRadioClick(state: State) {
         _state.update { it.copy(examState = state) }
-        update()
+        savedStateHandle[STATE] = _state.value.examState
     }
 
-    private fun update() {
-        savedStateHandle["step"] = _state.value.step.key
-        savedStateHandle["agreement"] = _state.value.isAgreementAccepted
-        savedStateHandle["state"] = _state.value.examState.key
+    companion object {
+        const val STEP = "step"
+        const val STATE = "state"
+        const val AGREEMENT = "agreement"
     }
 }

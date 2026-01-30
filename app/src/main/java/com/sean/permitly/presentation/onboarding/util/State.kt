@@ -4,16 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.sean.permitly.R
 
-enum class State(val key: String) {
-    NONE("none"),
-    NJ("nj"),
-    NY("ny"),
-    TX("tx");
-
-    companion object {
-        fun fromKey(key: String): State =
-            State.entries.first { it.key == key }
-    }
+enum class State {
+    NONE,
+    NJ,
+    NY,
+    TX
 }
 
 @Composable

@@ -31,21 +31,23 @@ import com.sean.permitly.presentation.component.TextedRadioButton
 import com.sean.permitly.presentation.onboarding.util.OnboardingTags
 import com.sean.permitly.presentation.onboarding.util.State
 import com.sean.permitly.presentation.onboarding.util.displayName
-import com.sean.permitly.ui.theme.Elevation
 import com.sean.permitly.ui.theme.Dimens
+import com.sean.permitly.ui.theme.Elevation
 import com.sean.permitly.ui.theme.PermitlyTheme
 
 @Composable
 fun StatesPage(statesPageData: StatesPageData) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .fillMaxHeight(0.8f)
                 .padding(horizontal = Dimens.M_0),
             verticalArrangement = Arrangement.spacedBy(Dimens.M_0)
         ) {
             Text(
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
                     .padding(top = Dimens.M_0),
                 text = stringResource(R.string.choose_state),
                 style = MaterialTheme.typography.displaySmall,
@@ -53,7 +55,8 @@ fun StatesPage(statesPageData: StatesPageData) {
             )
 
             Column(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .shadow(
                         elevation = Elevation.standard,
                         shape = RoundedCornerShape(Dimens.S_0)
@@ -66,17 +69,18 @@ fun StatesPage(statesPageData: StatesPageData) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 LazyColumn(
-                    modifier = Modifier.testTag(OnboardingTags.States.LAZY_COLUMN)
+                    modifier = Modifier
+                        .testTag(OnboardingTags.States.LAZY_COLUMN)
                         .weight(1f),
                     contentPadding = PaddingValues(top = Dimens.S_0)
                 ) {
                     items(
                         items = State.entries,
-                        key = { it.key }
+                        key = { it }
                     ) {
                         if (it != State.NONE) {
                             TextedRadioButton(
-                                modifier = Modifier.testTag(OnboardingTags.States.RADIO_BUTTON + it.key),
+                                modifier = Modifier.testTag(OnboardingTags.States.RADIO_BUTTON + it),
                                 text = it.displayName(),
                                 selected = it == statesPageData.examState,
                                 onClick = {
