@@ -18,12 +18,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.sean.permitly.R
 import com.sean.permitly.presentation.component.NavigationProgress
 import com.sean.permitly.presentation.component.PrimaryButton
-import com.sean.permitly.presentation.onboarding.pages.agreement.AgreementPage
-import com.sean.permitly.presentation.onboarding.pages.states.StatesPage
 import com.sean.permitly.presentation.onboarding.pages.WelcomePage
+import com.sean.permitly.presentation.onboarding.pages.agreement.AgreementPage
 import com.sean.permitly.presentation.onboarding.pages.agreement.AgreementPageData
+import com.sean.permitly.presentation.onboarding.pages.states.StatesPage
 import com.sean.permitly.presentation.onboarding.pages.states.StatesPageData
 import com.sean.permitly.presentation.onboarding.util.OnboardingTags
+import com.sean.permitly.presentation.onboarding.util.PrimaryButtonData
 import com.sean.permitly.presentation.onboarding.util.State
 import com.sean.permitly.presentation.onboarding.util.Step
 import com.sean.permitly.ui.theme.Dimens
@@ -35,16 +36,40 @@ fun OnboardingUI(
     step: Step,
     agreementPageData: AgreementPageData,
     statesPageData: StatesPageData,
-    onNextClick: () -> Unit
+    onNextClick: () -> Unit,
+    onStepChange: (Step) -> Unit
 ) {
     val primaryButtonData = when (step) {
-        Step.WELCOME -> true to stringResource(R.string.next)
-        Step.AGREEMENT -> agreementPageData.isAgreementAccepted to stringResource(R.string.next)
-        Step.STATES -> (statesPageData.examState != State.NONE) to stringResource(R.string.get_started)
+        Step.WELCOME -> PrimaryButtonData(
+            text = stringResource(R.string.next),
+            enabled = true,
+            action = {
+                onStepChange(Step.AGREEMENT)
+                onNextClick()
+            }
+        )
+
+        Step.AGREEMENT -> PrimaryButtonData(
+            text = stringResource(R.string.next),
+            enabled = agreementPageData.isAgreementAccepted,
+            action = {
+                onStepChange(Step.STATES)
+                onNextClick()
+            }
+        )
+
+        Step.STATES -> PrimaryButtonData(
+            text = stringResource(R.string.get_started),
+            enabled = statesPageData.examState != State.NONE,
+            action = {
+                onNextClick()
+            }
+        )
     }
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.spacedBy(Dimens.M_0)
     ) {
@@ -68,15 +93,14 @@ fun OnboardingUI(
         )
 
         PrimaryButton(
-            onClick = onNextClick,
-            modifier = Modifier.testTag(OnboardingTags.NAVIGATION_BUTTON)
+            modifier = Modifier
+                .testTag(OnboardingTags.NAVIGATION_BUTTON)
                 .padding(
                     start = Dimens.M_0,
                     end = Dimens.M_0,
                     bottom = Dimens.L_0
                 ),
-            enabled = primaryButtonData.first,
-            text = primaryButtonData.second
+            primaryButtonData = primaryButtonData
         )
     }
 }
@@ -98,7 +122,8 @@ private fun OnboardingUIPreview() {
                 examState = State.NONE,
                 onRadioClick = {}
             ),
-            onNextClick = {}
+            onNextClick = {},
+            onStepChange = {}
         )
     }
 }

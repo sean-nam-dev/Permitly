@@ -50,7 +50,8 @@ fun OnboardingScreen(
             examState = state.value.examState,
             onRadioClick = viewModel::onRadioClick
         ),
-        onNextClick = viewModel::onNextClick
+        onNextClick = viewModel::onNextClick,
+        onStepChange = viewModel::onStepChange
     )
 }
 

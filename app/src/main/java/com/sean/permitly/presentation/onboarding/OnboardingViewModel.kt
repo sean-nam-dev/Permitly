@@ -39,21 +39,14 @@ class OnboardingViewModel(
         get() = _event
 
     override fun onNextClick() {
-        when (_state.value.step) {
-            Step.WELCOME -> {
-                _state.update { it.copy(step = Step.AGREEMENT) }
-            }
-            Step.AGREEMENT -> {
-                _state.update { it.copy(step = Step.STATES) }
-            }
-            Step.STATES -> {
-
-            }
-        }
         viewModelScope.launch {
             _event.emit(OnboardingEvent.Navigate)
         }
         update()
+    }
+
+    override fun onStepChange(step: Step) {
+        _state.update { it.copy(step = step) }
     }
 
     override fun onAgreementClick() {

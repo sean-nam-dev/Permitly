@@ -12,21 +12,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sean.permitly.presentation.onboarding.util.PrimaryButtonData
 import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.PermitlyTheme
 
 @Composable
 fun PrimaryButton(
-    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean,
-    text: String
+    primaryButtonData: PrimaryButtonData
 ) {
     Button(
-        onClick = onClick,
-        modifier = modifier.fillMaxWidth()
+        onClick = primaryButtonData.action,
+        modifier = modifier
+            .fillMaxWidth()
             .height(Dimens.XXL_5),
-        enabled = enabled,
+        enabled = primaryButtonData.enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -35,7 +35,7 @@ fun PrimaryButton(
         )
     ) {
         Text(
-            text = text,
+            text = primaryButtonData.text,
             style = MaterialTheme.typography.headlineMedium
         )
     }
@@ -47,18 +47,25 @@ fun PrimaryButton(
 )
 @Composable
 private fun PrimaryButtonComponentPreview() {
+    val primaryButtonData1 = PrimaryButtonData(
+        text = "Next",
+        enabled = true,
+        action = {}
+    )
+    val primaryButtonData2 = PrimaryButtonData(
+        text = "Next",
+        enabled = false,
+        action = {}
+    )
+
     PermitlyTheme {
         Column {
             PrimaryButton(
-                onClick = {},
-                enabled = true,
-                text = "Next"
+                primaryButtonData = primaryButtonData1
             )
             Spacer(modifier = Modifier.height(10.dp))
             PrimaryButton(
-                onClick = {},
-                enabled = false,
-                text = "Next"
+                primaryButtonData = primaryButtonData2
             )
         }
     }
