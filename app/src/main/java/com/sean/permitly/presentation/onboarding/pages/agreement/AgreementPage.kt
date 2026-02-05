@@ -29,8 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.sean.permitly.R
 import com.sean.permitly.presentation.component.TextedCheckbox
 import com.sean.permitly.presentation.onboarding.util.OnboardingTags
-import com.sean.permitly.ui.theme.Elevation
 import com.sean.permitly.ui.theme.Dimens
+import com.sean.permitly.ui.theme.Elevation
 import com.sean.permitly.ui.theme.PermitlyTheme
 
 @Composable
@@ -39,23 +39,28 @@ fun AgreementPage(agreementPageData: AgreementPageData) {
     val agreementTexts = stringArrayResource(R.array.agreement_texts)
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .testTag(OnboardingTags.Agreement.PAGE)
+            .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(Dimens.M_0)
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .fillMaxHeight(0.8f),
             verticalArrangement = Arrangement.spacedBy(Dimens.M_0)
         ) {
             Text(
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
                     .padding(top = Dimens.M_0),
                 text = stringResource(R.string.privacy_and_terms),
                 style = MaterialTheme.typography.displaySmall,
                 color = MaterialTheme.colorScheme.onBackground
             )
             LazyColumn(
-                modifier = Modifier.padding(horizontal = Dimens.M_0)
+                modifier = Modifier
+                    .padding(horizontal = Dimens.M_0)
                     .weight(1f)
                     .shadow(
                         elevation = Elevation.standard,

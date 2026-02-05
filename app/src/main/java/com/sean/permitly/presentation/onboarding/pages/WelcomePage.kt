@@ -15,24 +15,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.sean.permitly.R
-import com.sean.permitly.ui.theme.Elevation
+import com.sean.permitly.presentation.onboarding.util.OnboardingTags
 import com.sean.permitly.ui.theme.Dimens
+import com.sean.permitly.ui.theme.Elevation
 import com.sean.permitly.ui.theme.PermitlyTheme
 
 @Composable
 fun WelcomePage() {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .testTag(OnboardingTags.Welcome.PAGE)
+            .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(Dimens.M_0)
     ) {
         Image(
             painter = painterResource(R.drawable.welcome_poster),
             contentDescription = stringResource(R.string.welcome_poster),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .fillMaxHeight(0.8f)
                 .shadow(
                     elevation = Elevation.standard,
@@ -51,7 +56,8 @@ fun WelcomePage() {
         )
 
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .padding(Dimens.M_0)
         ) {
             Text(

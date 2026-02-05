@@ -37,7 +37,11 @@ import com.sean.permitly.ui.theme.PermitlyTheme
 
 @Composable
 fun StatesPage(statesPageData: StatesPageData) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .testTag(OnboardingTags.States.PAGE)
+            .fillMaxSize()
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

@@ -15,7 +15,8 @@ import com.sean.permitly.ui.theme.PermitlyTheme
 
 @Composable
 fun OnboardingScreen(
-    viewModel: OnboardingViewModel
+    viewModel: OnboardingViewModel,
+    navigateToLogin: () -> Unit
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState { Step.entries.size }
@@ -32,7 +33,7 @@ fun OnboardingScreen(
                             )
                         )
                     } else {
-                        // Navigate to Login
+                        navigateToLogin()
                     }
                 }
             }
@@ -62,7 +63,8 @@ private fun OnboardingScreenPreview() {
 
     PermitlyTheme {
         OnboardingScreen(
-            viewModel = viewModel
+            viewModel = viewModel,
+            navigateToLogin = {},
         )
     }
 }
