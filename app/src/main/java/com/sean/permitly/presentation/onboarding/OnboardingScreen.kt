@@ -19,7 +19,9 @@ fun OnboardingScreen(
     navigateToLogin: () -> Unit
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
-    val pagerState = rememberPagerState { Step.entries.size }
+    val pagerState = rememberPagerState(state.value.step.ordinal) {
+        Step.entries.size
+    }
 
     LaunchedEffect(Unit) {
         viewModel.event.collect { event ->
@@ -39,6 +41,8 @@ fun OnboardingScreen(
             }
         }
     }
+
+
 
     OnboardingUI(
         pagerState = pagerState,
