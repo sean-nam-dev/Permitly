@@ -1,6 +1,5 @@
 package com.sean.permitly
 
-import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
@@ -15,6 +14,7 @@ import com.sean.permitly.presentation.onboarding.OnboardingViewModel
 import com.sean.permitly.presentation.onboarding.util.OnboardingTags
 import com.sean.permitly.presentation.onboarding.util.State
 import com.sean.permitly.presentation.onboarding.util.Step
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -63,7 +63,7 @@ class OnboardingTest {
     }
 
     @Test
-    fun default_onboarding_state_displays_welcome_step() {
+    fun navigation_from_welcome_to_agreement() {
         composeTestRule.setContent {
             OnboardingScreen(
                 viewModel = OnboardingViewModel(SavedStateHandle()),
@@ -75,21 +75,21 @@ class OnboardingTest {
             .assertIsDisplayed()
 
         composeTestRule.onNodeWithTag(OnboardingTags.NAVIGATION_BUTTON)
-            .assertIsDisplayed()
             .assertIsEnabled()
-            .assertHasClickAction()
+            .performClick()
+
+        composeTestRule.onNodeWithTag(OnboardingTags.Agreement.PAGE)
+            .assertIsDisplayed()
     }
 
     @Test
-    fun agreement_acceptance_toggles_navigation_availability() {
+    fun agreement_checkbox_toggles_navigation_availability() {
         composeTestRule.setContent {
             OnboardingScreen(
                 viewModel = OnboardingViewModel(
                     SavedStateHandle(
                         mapOf(
                             OnboardingViewModel.STEP to Step.AGREEMENT,
-                            OnboardingViewModel.AGREEMENT to false,
-                            OnboardingViewModel.STATE to State.NONE
                         )
                     )
                 ),
@@ -111,5 +111,91 @@ class OnboardingTest {
 
         composeTestRule.onNodeWithTag(OnboardingTags.NAVIGATION_BUTTON)
             .assertIsNotEnabled()
+    }
+
+    @Test
+    fun from_agreement_to_states() {
+        composeTestRule.setContent {
+            OnboardingScreen(
+                viewModel = OnboardingViewModel(
+                    SavedStateHandle(
+                        mapOf(
+                            OnboardingViewModel.STEP to Step.AGREEMENT,
+                            OnboardingViewModel.AGREEMENT to true
+                        )
+                    )
+                ),
+                navigateToLogin = {}
+            )
+        }
+
+        composeTestRule.onNodeWithTag(OnboardingTags.Agreement.PAGE)
+            .assertIsDisplayed()
+
+        composeTestRule.onNodeWithTag(OnboardingTags.NAVIGATION_BUTTON)
+            .assertIsEnabled()
+            .performClick()
+
+        composeTestRule.onNodeWithTag(OnboardingTags.States.PAGE)
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun selecting_state_enables_navigation() {
+        composeTestRule.setContent {
+            OnboardingScreen(
+                viewModel = OnboardingViewModel(
+                    SavedStateHandle(
+                        mapOf(
+                            OnboardingViewModel.STEP to Step.STATES,
+                            OnboardingViewModel.AGREEMENT to true
+                        )
+                    )
+                ),
+                navigateToLogin = {}
+            )
+        }
+
+        composeTestRule.onNodeWithTag(OnboardingTags.NAVIGATION_BUTTON)
+            .assertIsDisplayed()
+            .assertIsNotEnabled()
+
+        composeTestRule.onNodeWithTag(OnboardingTags.States.LAZY_COLUMN)
+            .performScrollToKey(State.NJ)
+
+        composeTestRule.onNodeWithTag(OnboardingTags.States.RADIO_BUTTON + State.NJ)
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule.onNodeWithTag(OnboardingTags.NAVIGATION_BUTTON)
+            .assertIsDisplayed()
+            .assertIsEnabled()
+    }
+
+    @Test
+    fun navigation_to_login_trigger_check() {
+        var isTriggered = false
+
+        composeTestRule.setContent {
+            OnboardingScreen(
+                viewModel = OnboardingViewModel(
+                    SavedStateHandle(
+                        mapOf(
+                            OnboardingViewModel.STEP to Step.STATES,
+                            OnboardingViewModel.AGREEMENT to true,
+                            OnboardingViewModel.STATE to State.NJ
+                        )
+                    )
+                ),
+                navigateToLogin = { isTriggered = true }
+            )
+        }
+
+        composeTestRule.onNodeWithTag(OnboardingTags.NAVIGATION_BUTTON)
+            .assertIsDisplayed()
+            .assertIsEnabled()
+            .performClick()
+
+        assertTrue(isTriggered)
     }
 }
