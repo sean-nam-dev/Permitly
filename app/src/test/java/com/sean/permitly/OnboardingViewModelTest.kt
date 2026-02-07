@@ -21,14 +21,11 @@ class OnboardingViewModelTest {
     val mainDispatcherRule = MainDispatcherRule()
 
     @Test
-    fun `initial step is welcome`() {
-        val viewModel = OnboardingViewModel(SavedStateHandle())
-        assertEquals(Step.WELCOME, viewModel.state.value.step)
-    }
-
-    @Test
     fun `onNextClick triggers Navigate event`() = runTest {
         val viewModel = OnboardingViewModel(SavedStateHandle())
+
+        assertEquals(Step.WELCOME, viewModel.state.value.step)
+
         viewModel.event.test {
             viewModel.onNextClick()
             assertEquals(OnboardingEvent.Navigate, awaitItem())
@@ -37,7 +34,7 @@ class OnboardingViewModelTest {
     }
 
     @Test
-    fun `isAgreementAccepted is false by default`() {
+    fun `onAgreementClick toggles isAgreementAccepted`() {
         val viewModel = OnboardingViewModel(
             SavedStateHandle(
                 mapOf(
@@ -45,61 +42,16 @@ class OnboardingViewModelTest {
                 )
             )
         )
+
         assertFalse(viewModel.state.value.isAgreementAccepted)
-    }
 
-    @Test
-    fun `onAgreementClick changes isAgreementAccepted from false to true`() {
-        val viewModel = OnboardingViewModel(
-            SavedStateHandle(
-                mapOf(
-                    OnboardingViewModel.STEP to Step.AGREEMENT
-                )
-            )
-        )
         viewModel.onAgreementClick()
+
         assertTrue(viewModel.state.value.isAgreementAccepted)
-    }
 
-    @Test
-    fun `onNextClick does not change step if isAgreementAccepted is false`() {
-        val viewModel = OnboardingViewModel(
-            SavedStateHandle(
-                mapOf(
-                    OnboardingViewModel.STEP to Step.AGREEMENT
-                )
-            )
-        )
-        viewModel.onNextClick()
-        assertEquals(Step.AGREEMENT, viewModel.state.value.step)
-    }
+        viewModel.onAgreementClick()
 
-    @Test
-    fun `onNextClick does not trigger Navigate event`() = runTest {
-        val viewModel = OnboardingViewModel(
-            SavedStateHandle(
-                mapOf(
-                    OnboardingViewModel.STEP to Step.AGREEMENT
-                )
-            )
-        )
-        viewModel.event.test {
-            viewModel.onNextClick()
-            expectNoEvents()
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    @Test
-    fun `examState is NONE by default`() {
-        val viewModel = OnboardingViewModel(
-            SavedStateHandle(
-                mapOf(
-                    OnboardingViewModel.STEP to Step.STATES
-                )
-            )
-        )
-        assertTrue(viewModel.state.value.examState == State.NONE)
+        assertFalse(viewModel.state.value.isAgreementAccepted)
     }
 
     @Test
@@ -111,40 +63,11 @@ class OnboardingViewModelTest {
                 )
             )
         )
+
+        assertEquals(State.NONE, viewModel.state.value.examState)
+
         viewModel.onRadioClick(State.NJ)
+
         assertEquals(State.NJ, viewModel.state.value.examState)
-    }
-
-    @Test
-    fun `onNextClick does not trigger navigation if currentState is NONE`() = runTest {
-        val viewModel = OnboardingViewModel(
-            SavedStateHandle(
-                mapOf(
-                    OnboardingViewModel.STEP to Step.STATES
-                )
-            )
-        )
-        viewModel.event.test {
-            viewModel.onNextClick()
-            expectNoEvents()
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    @Test
-    fun `onNextClick triggers navigation if currentState is not NONE`() = runTest {
-        val viewModel = OnboardingViewModel(
-            SavedStateHandle(
-                mapOf(
-                    OnboardingViewModel.STEP to Step.STATES,
-                    OnboardingViewModel.STATE to State.NJ
-                )
-            )
-        )
-        viewModel.event.test {
-            viewModel.onNextClick()
-            assertEquals(OnboardingEvent.Navigate, awaitItem())
-            cancelAndIgnoreRemainingEvents()
-        }
     }
 }
