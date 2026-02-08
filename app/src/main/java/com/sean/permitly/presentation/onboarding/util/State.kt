@@ -4,20 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.sean.permitly.R
 
-enum class State {
-    NONE,
-    NJ,
-    NY,
-    TX
+enum class State(val id: Int) {
+    NONE(R.string.none),
+    NJ(R.string.new_jersey),
+    NY(R.string.new_york);
 }
 
 @Composable
-fun State.displayName(): String {
-    val resId = when (this) {
-        State.NONE -> R.string.none
-        State.NJ -> R.string.new_jersey
-        State.NY -> R.string.new_york
-        State.TX -> R.string.texas
-    }
-    return stringResource(resId)
-}
+fun State.displayName(): String = stringResource(id)

@@ -2,6 +2,7 @@ package com.sean.permitly
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import com.sean.permitly.core.Key
 import com.sean.permitly.presentation.onboarding.OnboardingEvent
 import com.sean.permitly.presentation.onboarding.OnboardingViewModel
 import com.sean.permitly.presentation.onboarding.util.State
@@ -38,7 +39,7 @@ class OnboardingViewModelTest {
         val viewModel = OnboardingViewModel(
             SavedStateHandle(
                 mapOf(
-                    OnboardingViewModel.STEP to Step.AGREEMENT
+                    Key.STEP.name to Step.AGREEMENT
                 )
             )
         )
@@ -59,7 +60,7 @@ class OnboardingViewModelTest {
         val viewModel = OnboardingViewModel(
             SavedStateHandle(
                 mapOf(
-                    OnboardingViewModel.STEP to Step.STATES
+                    Key.STEP.name to Step.STATES
                 )
             )
         )

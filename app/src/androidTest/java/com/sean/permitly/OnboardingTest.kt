@@ -9,6 +9,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToKey
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.sean.permitly.core.Key
 import com.sean.permitly.presentation.onboarding.OnboardingScreen
 import com.sean.permitly.presentation.onboarding.OnboardingViewModel
 import com.sean.permitly.presentation.onboarding.util.OnboardingTags
@@ -89,7 +90,7 @@ class OnboardingTest {
                 viewModel = OnboardingViewModel(
                     SavedStateHandle(
                         mapOf(
-                            OnboardingViewModel.STEP to Step.AGREEMENT,
+                            Key.STEP.name to Step.AGREEMENT,
                         )
                     )
                 ),
@@ -120,8 +121,8 @@ class OnboardingTest {
                 viewModel = OnboardingViewModel(
                     SavedStateHandle(
                         mapOf(
-                            OnboardingViewModel.STEP to Step.AGREEMENT,
-                            OnboardingViewModel.AGREEMENT to true
+                            Key.STEP.name to Step.AGREEMENT,
+                            Key.AGREEMENT.name to true
                         )
                     )
                 ),
@@ -147,8 +148,8 @@ class OnboardingTest {
                 viewModel = OnboardingViewModel(
                     SavedStateHandle(
                         mapOf(
-                            OnboardingViewModel.STEP to Step.STATES,
-                            OnboardingViewModel.AGREEMENT to true
+                            Key.STEP.name to Step.STATES,
+                            Key.AGREEMENT.name to true
                         )
                     )
                 ),
@@ -181,9 +182,9 @@ class OnboardingTest {
                 viewModel = OnboardingViewModel(
                     SavedStateHandle(
                         mapOf(
-                            OnboardingViewModel.STEP to Step.STATES,
-                            OnboardingViewModel.AGREEMENT to true,
-                            OnboardingViewModel.STATE to State.NJ
+                            Key.STEP.name to Step.STATES,
+                            Key.AGREEMENT.name to true,
+                            Key.STATE.name to State.NJ
                         )
                     )
                 ),

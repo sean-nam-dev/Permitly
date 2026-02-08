@@ -19,7 +19,7 @@ fun OnboardingScreen(
     navigateToLogin: () -> Unit
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
-    val pagerState = rememberPagerState(state.value.step.ordinal) {
+    val pagerState = rememberPagerState(state.value.step.index) {
         Step.entries.size
     }
 
