@@ -3,6 +3,7 @@ package com.sean.permitly
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.sean.permitly.core.Key
+import com.sean.permitly.dispatcher.MainDispatcherRule
 import com.sean.permitly.presentation.onboarding.OnboardingEvent
 import com.sean.permitly.presentation.onboarding.OnboardingViewModel
 import com.sean.permitly.presentation.onboarding.util.State
