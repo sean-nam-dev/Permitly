@@ -25,7 +25,7 @@ import com.sean.permitly.presentation.onboarding.pages.states.StatesPage
 import com.sean.permitly.presentation.onboarding.pages.states.StatesPageData
 import com.sean.permitly.presentation.onboarding.util.OnboardingTags
 import com.sean.permitly.presentation.onboarding.util.PrimaryButtonData
-import com.sean.permitly.presentation.onboarding.util.State
+import com.sean.permitly.core.State
 import com.sean.permitly.presentation.onboarding.util.Step
 import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.PermitlyTheme

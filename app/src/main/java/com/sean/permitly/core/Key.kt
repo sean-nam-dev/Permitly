@@ -3,5 +3,6 @@ package com.sean.permitly.core
 enum class Key {
     STEP,
     STATE,
-    AGREEMENT
+    AGREEMENT,
+    FIRST_LAUNCH
 }

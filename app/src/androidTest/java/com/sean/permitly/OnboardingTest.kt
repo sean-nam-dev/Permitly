@@ -13,7 +13,7 @@ import com.sean.permitly.core.Key
 import com.sean.permitly.presentation.onboarding.OnboardingScreen
 import com.sean.permitly.presentation.onboarding.OnboardingViewModel
 import com.sean.permitly.presentation.onboarding.util.OnboardingTags
-import com.sean.permitly.presentation.onboarding.util.State
+import com.sean.permitly.core.State
 import com.sean.permitly.presentation.onboarding.util.Step
 import org.junit.Assert.assertTrue
 import org.junit.Rule

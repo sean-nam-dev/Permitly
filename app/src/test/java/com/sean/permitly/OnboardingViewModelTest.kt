@@ -6,7 +6,7 @@ import com.sean.permitly.core.Key
 import com.sean.permitly.dispatcher.MainDispatcherRule
 import com.sean.permitly.presentation.onboarding.OnboardingEvent
 import com.sean.permitly.presentation.onboarding.OnboardingViewModel
-import com.sean.permitly.presentation.onboarding.util.State
+import com.sean.permitly.core.State
 import com.sean.permitly.presentation.onboarding.util.Step
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
