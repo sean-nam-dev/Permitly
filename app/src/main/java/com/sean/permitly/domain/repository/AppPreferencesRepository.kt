@@ -1,7 +1,7 @@
 package com.sean.permitly.domain.repository
 
-import com.sean.permitly.domain.result.DataError
-import com.sean.permitly.domain.result.Result
+import com.sean.permitly.domain.error.DataError
+import com.sean.permitly.domain.error.Result
 import kotlinx.coroutines.flow.Flow
 
 interface AppPreferencesRepository {
@@ -19,10 +19,10 @@ interface AppPreferencesRepository {
     fun read(
         key: String,
         default: Boolean
-    ): Flow<Result<Boolean, DataError.Local>>
+    ): Flow<Boolean>
 
     fun read(
         key: String,
         default: String
-    ): Flow<Result<String, DataError.Local>>
+    ): Flow<String>
 }

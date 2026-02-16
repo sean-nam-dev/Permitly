@@ -1,4 +1,4 @@
-package com.sean.permitly.domain.result
+package com.sean.permitly.domain.error
 
 sealed interface DataError : Error {
 
@@ -7,6 +7,7 @@ sealed interface DataError : Error {
     }
 
     enum class Local : DataError {
+        IO,
         DISK_FULL,
         UNKNOWN
     }

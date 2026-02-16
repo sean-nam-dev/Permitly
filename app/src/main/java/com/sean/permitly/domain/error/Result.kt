@@ -1,4 +1,4 @@
-package com.sean.permitly.domain.result
+package com.sean.permitly.domain.error
 
 typealias RootError = Error
 
