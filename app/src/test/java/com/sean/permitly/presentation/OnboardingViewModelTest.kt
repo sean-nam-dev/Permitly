@@ -2,9 +2,9 @@ package com.sean.permitly.presentation
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import com.sean.permitly.domain.model.State
 import com.sean.permitly.presentation.onboarding.OnboardingEvent
 import com.sean.permitly.presentation.onboarding.OnboardingViewModel
-import com.sean.permitly.presentation.onboarding.util.State
 import com.sean.permitly.presentation.onboarding.util.Step
 import com.sean.permitly.util.dispatcher.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,8 +1,9 @@
 package com.sean.permitly.domain.usecase
 
 import com.sean.permitly.data.util.AppSettingsKeys
+import com.sean.permitly.domain.model.State
 import com.sean.permitly.domain.repository.AppSettingsRepository
-import com.sean.permitly.presentation.onboarding.util.State
+import kotlinx.coroutines.flow.map
 
 class ReadStateUseCase(
     private val appSettingsRepository: AppSettingsRepository
@@ -10,5 +11,11 @@ class ReadStateUseCase(
     operator fun invoke() = appSettingsRepository.read(
         key = AppSettingsKeys.STATE,
         default = State.NJ.name
-    )
+    ).map {
+        try {
+            State.valueOf(it)
+        } catch (_: Exception) {
+            State.NONE
+        }
+    }
 }

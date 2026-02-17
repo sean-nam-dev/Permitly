@@ -3,7 +3,7 @@ package com.sean.permitly.presentation.onboarding
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sean.permitly.presentation.onboarding.util.State
+import com.sean.permitly.domain.model.State
 import com.sean.permitly.presentation.onboarding.util.Step
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow

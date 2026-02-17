@@ -27,9 +27,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.sean.permitly.R
+import com.sean.permitly.domain.model.State
 import com.sean.permitly.presentation.component.TextedRadioButton
 import com.sean.permitly.presentation.onboarding.util.OnboardingTags
-import com.sean.permitly.presentation.onboarding.util.State
 import com.sean.permitly.presentation.onboarding.util.displayName
 import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.Elevation
