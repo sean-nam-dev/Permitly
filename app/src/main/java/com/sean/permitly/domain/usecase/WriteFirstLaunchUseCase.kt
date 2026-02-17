@@ -1,13 +1,13 @@
 package com.sean.permitly.domain.usecase
 
-import com.sean.permitly.data.util.PreferencesKeys
-import com.sean.permitly.domain.repository.AppPreferencesRepository
+import com.sean.permitly.data.util.AppSettingsKeys
+import com.sean.permitly.domain.repository.AppSettingsRepository
 
 class WriteFirstLaunchUseCase(
-    private val appPreferencesRepository: AppPreferencesRepository
+    private val appSettingsRepository: AppSettingsRepository
 ) {
-    suspend operator fun invoke(value: Boolean) = appPreferencesRepository.insert(
-        key = PreferencesKeys.FIRST_LAUNCH,
+    suspend operator fun invoke(value: Boolean) = appSettingsRepository.insert(
+        key = AppSettingsKeys.FIRST_LAUNCH,
         value = value
     )
 }

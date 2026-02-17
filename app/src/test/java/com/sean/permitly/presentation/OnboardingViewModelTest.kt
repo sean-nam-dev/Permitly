@@ -1,13 +1,12 @@
-package com.sean.permitly
+package com.sean.permitly.presentation
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.sean.permitly.dispatcher.MainDispatcherRule
 import com.sean.permitly.presentation.onboarding.OnboardingEvent
 import com.sean.permitly.presentation.onboarding.OnboardingViewModel
-import com.sean.permitly.presentation.onboarding.OnboardingViewModel.Companion.STEP_KEY
 import com.sean.permitly.presentation.onboarding.util.State
 import com.sean.permitly.presentation.onboarding.util.Step
+import com.sean.permitly.util.dispatcher.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
@@ -38,7 +37,7 @@ class OnboardingViewModelTest {
         val viewModel = OnboardingViewModel(
             SavedStateHandle(
                 mapOf(
-                    STEP_KEY to Step.AGREEMENT
+                    OnboardingViewModel.Companion.STEP_KEY to Step.AGREEMENT
                 )
             )
         )
@@ -59,7 +58,7 @@ class OnboardingViewModelTest {
         val viewModel = OnboardingViewModel(
             SavedStateHandle(
                 mapOf(
-                    STEP_KEY to Step.STATES
+                    OnboardingViewModel.Companion.STEP_KEY to Step.STATES
                 )
             )
         )

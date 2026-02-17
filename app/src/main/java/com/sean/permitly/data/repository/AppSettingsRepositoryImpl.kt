@@ -9,14 +9,14 @@ import com.sean.permitly.data.error.LocalErrorMapper
 import com.sean.permitly.data.util.safeCall
 import com.sean.permitly.domain.error.DataError
 import com.sean.permitly.domain.error.Result
-import com.sean.permitly.domain.repository.AppPreferencesRepository
+import com.sean.permitly.domain.repository.AppSettingsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class AppPreferencesRepositoryImpl(
+class AppSettingsRepositoryImpl(
     private val dataStore: DataStore<Preferences>,
     private val localErrorMapper: LocalErrorMapper
-) : AppPreferencesRepository {
+) : AppSettingsRepository {
 
     override suspend fun insert(
         key: String,

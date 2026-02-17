@@ -1,4 +1,4 @@
-package com.sean.permitly.dispatcher
+package com.sean.permitly.util.dispatcher
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

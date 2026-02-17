@@ -4,7 +4,7 @@ import com.sean.permitly.domain.error.DataError
 import com.sean.permitly.domain.error.Result
 import kotlinx.coroutines.flow.Flow
 
-interface AppPreferencesRepository {
+interface AppSettingsRepository {
 
     suspend fun insert(
         key: String,

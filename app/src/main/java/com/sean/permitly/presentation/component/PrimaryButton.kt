@@ -12,9 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sean.permitly.presentation.onboarding.util.PrimaryButtonData
 import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.PermitlyTheme
+
+data class PrimaryButtonData(
+    val text: String,
+    val enabled: Boolean,
+    val action: () -> Unit
+)
 
 @Composable
 fun PrimaryButton(
