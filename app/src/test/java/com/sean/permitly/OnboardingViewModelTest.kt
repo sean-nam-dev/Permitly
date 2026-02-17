@@ -2,17 +2,15 @@ package com.sean.permitly
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.sean.permitly.core.Key
 import com.sean.permitly.dispatcher.MainDispatcherRule
 import com.sean.permitly.presentation.onboarding.OnboardingEvent
 import com.sean.permitly.presentation.onboarding.OnboardingViewModel
-import com.sean.permitly.core.State
+import com.sean.permitly.presentation.onboarding.OnboardingViewModel.Companion.STEP_KEY
+import com.sean.permitly.presentation.onboarding.util.State
 import com.sean.permitly.presentation.onboarding.util.Step
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 
@@ -26,11 +24,11 @@ class OnboardingViewModelTest {
     fun `onNextClick triggers Navigate event`() = runTest {
         val viewModel = OnboardingViewModel(SavedStateHandle())
 
-        assertEquals(Step.WELCOME, viewModel.state.value.step)
+        Assert.assertEquals(Step.WELCOME, viewModel.state.value.step)
 
         viewModel.event.test {
             viewModel.onNextClick()
-            assertEquals(OnboardingEvent.Navigate, awaitItem())
+            Assert.assertEquals(OnboardingEvent.Navigate, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -40,20 +38,20 @@ class OnboardingViewModelTest {
         val viewModel = OnboardingViewModel(
             SavedStateHandle(
                 mapOf(
-                    Key.STEP.name to Step.AGREEMENT
+                    STEP_KEY to Step.AGREEMENT
                 )
             )
         )
 
-        assertFalse(viewModel.state.value.isAgreementAccepted)
+        Assert.assertFalse(viewModel.state.value.isAgreementAccepted)
 
         viewModel.onAgreementClick()
 
-        assertTrue(viewModel.state.value.isAgreementAccepted)
+        Assert.assertTrue(viewModel.state.value.isAgreementAccepted)
 
         viewModel.onAgreementClick()
 
-        assertFalse(viewModel.state.value.isAgreementAccepted)
+        Assert.assertFalse(viewModel.state.value.isAgreementAccepted)
     }
 
     @Test
@@ -61,15 +59,15 @@ class OnboardingViewModelTest {
         val viewModel = OnboardingViewModel(
             SavedStateHandle(
                 mapOf(
-                    Key.STEP.name to Step.STATES
+                    STEP_KEY to Step.STATES
                 )
             )
         )
 
-        assertEquals(State.NONE, viewModel.state.value.examState)
+        Assert.assertEquals(State.NONE, viewModel.state.value.examState)
 
         viewModel.onRadioClick(State.NJ)
 
-        assertEquals(State.NJ, viewModel.state.value.examState)
+        Assert.assertEquals(State.NJ, viewModel.state.value.examState)
     }
 }

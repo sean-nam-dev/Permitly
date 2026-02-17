@@ -3,8 +3,7 @@ package com.sean.permitly.presentation.onboarding
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sean.permitly.core.Key
-import com.sean.permitly.core.State
+import com.sean.permitly.presentation.onboarding.util.State
 import com.sean.permitly.presentation.onboarding.util.Step
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,9 +18,9 @@ class OnboardingViewModel(
 ) : ViewModel(), OnboardingAction {
     private val _state = MutableStateFlow(
         OnboardingState(
-            step = savedStateHandle[Key.STEP.name] ?: Step.WELCOME,
-            isAgreementAccepted = savedStateHandle[Key.AGREEMENT.name] ?: false,
-            examState = savedStateHandle[Key.STATE.name] ?: State.NONE
+            step = savedStateHandle[STEP_KEY] ?: Step.WELCOME,
+            isAgreementAccepted = savedStateHandle[AGREEMENT_KEY] ?: false,
+            examState = savedStateHandle[STATE_KEY] ?: State.NONE
         )
     )
     val state: StateFlow<OnboardingState>
@@ -43,16 +42,23 @@ class OnboardingViewModel(
 
     override fun onStepChange(step: Step) {
         _state.update { it.copy(step = step) }
-        savedStateHandle[Key.STEP.name] = _state.value.step
+        savedStateHandle[STEP_KEY] = step
     }
 
     override fun onAgreementClick() {
-        _state.update { it.copy(isAgreementAccepted = !it.isAgreementAccepted) }
-        savedStateHandle[Key.AGREEMENT.name] = _state.value.isAgreementAccepted
+        val newValue = !_state.value.isAgreementAccepted
+        _state.update { it.copy(isAgreementAccepted = newValue) }
+        savedStateHandle[AGREEMENT_KEY] = newValue
     }
 
     override fun onRadioClick(state: State) {
         _state.update { it.copy(examState = state) }
-        savedStateHandle[Key.STATE.name] = _state.value.examState
+        savedStateHandle[STATE_KEY] = state
+    }
+
+    companion object {
+        internal const val STEP_KEY = "step"
+        internal const val AGREEMENT_KEY = "agreement"
+        internal const val STATE_KEY = "state"
     }
 }

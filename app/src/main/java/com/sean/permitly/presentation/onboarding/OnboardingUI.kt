@@ -18,14 +18,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.sean.permitly.R
 import com.sean.permitly.presentation.component.NavigationProgress
 import com.sean.permitly.presentation.component.PrimaryButton
+import com.sean.permitly.presentation.component.PrimaryButtonData
 import com.sean.permitly.presentation.onboarding.pages.WelcomePage
 import com.sean.permitly.presentation.onboarding.pages.agreement.AgreementPage
 import com.sean.permitly.presentation.onboarding.pages.agreement.AgreementPageData
 import com.sean.permitly.presentation.onboarding.pages.states.StatesPage
 import com.sean.permitly.presentation.onboarding.pages.states.StatesPageData
 import com.sean.permitly.presentation.onboarding.util.OnboardingTags
-import com.sean.permitly.presentation.onboarding.util.PrimaryButtonData
-import com.sean.permitly.core.State
+import com.sean.permitly.presentation.onboarding.util.State
 import com.sean.permitly.presentation.onboarding.util.Step
 import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.PermitlyTheme

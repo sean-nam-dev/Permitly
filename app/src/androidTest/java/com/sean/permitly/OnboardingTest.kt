@@ -9,11 +9,13 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToKey
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.sean.permitly.core.Key
 import com.sean.permitly.presentation.onboarding.OnboardingScreen
 import com.sean.permitly.presentation.onboarding.OnboardingViewModel
+import com.sean.permitly.presentation.onboarding.OnboardingViewModel.Companion.AGREEMENT_KEY
+import com.sean.permitly.presentation.onboarding.OnboardingViewModel.Companion.STATE_KEY
+import com.sean.permitly.presentation.onboarding.OnboardingViewModel.Companion.STEP_KEY
 import com.sean.permitly.presentation.onboarding.util.OnboardingTags
-import com.sean.permitly.core.State
+import com.sean.permitly.presentation.onboarding.util.State
 import com.sean.permitly.presentation.onboarding.util.Step
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -90,7 +92,7 @@ class OnboardingTest {
                 viewModel = OnboardingViewModel(
                     SavedStateHandle(
                         mapOf(
-                            Key.STEP.name to Step.AGREEMENT,
+                            STEP_KEY to Step.AGREEMENT,
                         )
                     )
                 ),
@@ -121,8 +123,8 @@ class OnboardingTest {
                 viewModel = OnboardingViewModel(
                     SavedStateHandle(
                         mapOf(
-                            Key.STEP.name to Step.AGREEMENT,
-                            Key.AGREEMENT.name to true
+                            STEP_KEY to Step.AGREEMENT,
+                            AGREEMENT_KEY to true
                         )
                     )
                 ),
@@ -148,8 +150,8 @@ class OnboardingTest {
                 viewModel = OnboardingViewModel(
                     SavedStateHandle(
                         mapOf(
-                            Key.STEP.name to Step.STATES,
-                            Key.AGREEMENT.name to true
+                            STEP_KEY to Step.STATES,
+                            AGREEMENT_KEY to true
                         )
                     )
                 ),
@@ -182,9 +184,9 @@ class OnboardingTest {
                 viewModel = OnboardingViewModel(
                     SavedStateHandle(
                         mapOf(
-                            Key.STEP.name to Step.STATES,
-                            Key.AGREEMENT.name to true,
-                            Key.STATE.name to State.NJ
+                            STEP_KEY to Step.STATES,
+                            AGREEMENT_KEY to true,
+                            STATE_KEY to State.NJ
                         )
                     )
                 ),
