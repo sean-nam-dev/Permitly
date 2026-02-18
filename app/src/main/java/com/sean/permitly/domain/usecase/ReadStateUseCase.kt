@@ -10,7 +10,7 @@ class ReadStateUseCase(
 ) {
     operator fun invoke() = appSettingsRepository.read(
         key = AppSettingsKeys.STATE,
-        default = State.NJ.name
+        default = State.NONE.name
     ).map {
         try {
             State.valueOf(it)

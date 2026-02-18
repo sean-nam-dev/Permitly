@@ -8,6 +8,6 @@ class ReadFirstLaunchUseCase(
 ) {
     operator fun invoke() = appSettingsRepository.read(
         key = AppSettingsKeys.FIRST_LAUNCH,
-        default = false
+        default = true
     )
 }
