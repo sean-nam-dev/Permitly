@@ -14,9 +14,6 @@ class MainDispatcherRule(
     private val testDispatcher: TestDispatcher = StandardTestDispatcher()
 ) : TestWatcher() {
 
-    val dispatcher: TestDispatcher
-        get() = testDispatcher
-
     override fun starting(description: Description?) {
         Dispatchers.setMain(testDispatcher)
     }
