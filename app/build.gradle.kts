@@ -38,6 +38,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -48,6 +49,8 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.2.0")
 
     testImplementation("app.cash.turbine:turbine:1.2.1")
+
+    implementation("com.jakewharton.timber:timber:5.0.1")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
