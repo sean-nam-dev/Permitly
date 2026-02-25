@@ -9,13 +9,13 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToKey
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.sean.permitly.domain.model.State
 import com.sean.permitly.presentation.onboarding.OnboardingScreen
 import com.sean.permitly.presentation.onboarding.OnboardingViewModel
 import com.sean.permitly.presentation.onboarding.OnboardingViewModel.Companion.AGREEMENT_KEY
 import com.sean.permitly.presentation.onboarding.OnboardingViewModel.Companion.STATE_KEY
 import com.sean.permitly.presentation.onboarding.OnboardingViewModel.Companion.STEP_KEY
 import com.sean.permitly.presentation.onboarding.util.OnboardingTags
-import com.sean.permitly.presentation.onboarding.util.State
 import com.sean.permitly.presentation.onboarding.util.Step
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -58,7 +58,7 @@ class OnboardingTest {
         composeTestRule.onNodeWithTag(OnboardingTags.States.LAZY_COLUMN)
             .performScrollToKey(State.NJ)
 
-        composeTestRule.onNodeWithTag(OnboardingTags.States.RADIO_BUTTON + State.NJ)
+        composeTestRule.onNodeWithTag(OnboardingTags.States.radioButton(State.NJ))
             .performClick()
 
         composeTestRule.onNodeWithTag(OnboardingTags.NAVIGATION_BUTTON)
@@ -166,7 +166,7 @@ class OnboardingTest {
         composeTestRule.onNodeWithTag(OnboardingTags.States.LAZY_COLUMN)
             .performScrollToKey(State.NJ)
 
-        composeTestRule.onNodeWithTag(OnboardingTags.States.RADIO_BUTTON + State.NJ)
+        composeTestRule.onNodeWithTag(OnboardingTags.States.radioButton(State.NJ))
             .assertIsDisplayed()
             .performClick()
 

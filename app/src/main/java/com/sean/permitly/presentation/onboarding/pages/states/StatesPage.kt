@@ -84,7 +84,7 @@ fun StatesPage(statesPageData: StatesPageData) {
                     ) {
                         if (it != State.NONE) {
                             TextedRadioButton(
-                                modifier = Modifier.testTag(OnboardingTags.States.RADIO_BUTTON + it),
+                                modifier = Modifier.testTag(OnboardingTags.States.radioButton(it)),
                                 text = it.displayName(),
                                 selected = it == statesPageData.examState,
                                 onClick = {

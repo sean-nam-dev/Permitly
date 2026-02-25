@@ -1,14 +1,11 @@
-package com.sean.permitly.core.log
+package com.sean.permitly.data.log
 
 import com.sean.permitly.core.common.Logger
 import timber.log.Timber
 
-class TimberLogger(
-    private val isDebug: Boolean
-) : Logger {
+class TimberLogger : Logger {
 
     override fun d(message: String, throwable: Throwable?, tag: String?) {
-        if (!isDebug) return
         val timber = tag?.let { Timber.tag(it) } ?: Timber
         timber.d(throwable, message)
     }

@@ -1,5 +1,7 @@
 package com.sean.permitly.presentation.onboarding.util
 
+import com.sean.permitly.domain.model.State
+
 object OnboardingTags {
     const val NAVIGATION_BUTTON = "NAVIGATION_BUTTON"
 
@@ -13,7 +15,9 @@ object OnboardingTags {
     }
     object States {
         const val PAGE = "STATES_PAGE"
-        const val RADIO_BUTTON = "STATES_RADIO_BUTTON_"
         const val LAZY_COLUMN = "STATES_LAZY_COLUMN"
+
+        fun radioButton(state: State): String =
+            "STATES_RADIO_BUTTON_$state"
     }
 }

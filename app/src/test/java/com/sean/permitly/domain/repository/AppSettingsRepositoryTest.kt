@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import app.cash.turbine.test
 import com.sean.permitly.data.error.LocalErrorMapper
+import com.sean.permitly.data.log.TimberLogger
 import com.sean.permitly.data.repository.AppSettingsRepositoryImpl
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -27,6 +28,8 @@ class AppSettingsRepositoryTest {
     private lateinit var dataStore: DataStore<Preferences>
     private lateinit var appSettingsRepository: AppSettingsRepository
 
+    private val logger = TimberLogger()
+
     @Before
     fun setup() {
         testFile = File(
@@ -40,7 +43,8 @@ class AppSettingsRepositoryTest {
 
         appSettingsRepository = AppSettingsRepositoryImpl(
             dataStore = dataStore,
-            localErrorMapper = LocalErrorMapper()
+            localErrorMapper = LocalErrorMapper(),
+            logger = logger
         )
     }
 
