@@ -5,22 +5,22 @@ import timber.log.Timber
 
 class TimberLogger : Logger {
 
-    override fun d(message: String, throwable: Throwable?, tag: String?) {
+    override fun d(tag: String?, message: String, throwable: Throwable?) {
         val timber = tag?.let { Timber.tag(it) } ?: Timber
         timber.d(throwable, message)
     }
 
-    override fun i(message: String, throwable: Throwable?, tag: String?) {
+    override fun i(tag: String?, message: String, throwable: Throwable?) {
         val timber = tag?.let { Timber.tag(it) } ?: Timber
         timber.i(throwable, message)
     }
 
-    override fun w(message: String, throwable: Throwable?, tag: String?) {
+    override fun w(tag: String?, message: String, throwable: Throwable?) {
         val timber = tag?.let { Timber.tag(it) } ?: Timber
         timber.w(throwable, message)
     }
 
-    override fun e(message: String, throwable: Throwable?, tag: String?) {
+    override fun e(tag: String?, message: String, throwable: Throwable?) {
         val timber = tag?.let { Timber.tag(it) } ?: Timber
         timber.e(throwable, message)
     }

@@ -2,11 +2,11 @@ package com.sean.permitly.core.common
 
 interface Logger {
 
-    fun d(message: String, throwable: Throwable? = null, tag: String? = null)
+    fun d(tag: String? = null, message: String, throwable: Throwable? = null)
 
-    fun i(message: String, throwable: Throwable? = null, tag: String? = null)
+    fun i(tag: String? = null, message: String, throwable: Throwable? = null)
 
-    fun w(message: String, throwable: Throwable? = null, tag: String? = null)
+    fun w(tag: String? = null, message: String, throwable: Throwable? = null)
 
-    fun e(message: String, throwable: Throwable? = null, tag: String? = null)
+    fun e(tag: String? = null, message: String, throwable: Throwable? = null)
 }
