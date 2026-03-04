@@ -1,41 +1,41 @@
 package com.sean.permitly
 
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToKey
-import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sean.permitly.domain.model.State
-import com.sean.permitly.presentation.onboarding.OnboardingScreen
-import com.sean.permitly.presentation.onboarding.OnboardingViewModel
-import com.sean.permitly.presentation.onboarding.OnboardingViewModel.Companion.AGREEMENT_KEY
-import com.sean.permitly.presentation.onboarding.OnboardingViewModel.Companion.STATE_KEY
-import com.sean.permitly.presentation.onboarding.OnboardingViewModel.Companion.STEP_KEY
+import com.sean.permitly.presentation.onboarding.OnboardingUI
+import com.sean.permitly.presentation.onboarding.pages.agreement.AgreementPageData
+import com.sean.permitly.presentation.onboarding.pages.states.StatesPageData
 import com.sean.permitly.presentation.onboarding.util.OnboardingTags
 import com.sean.permitly.presentation.onboarding.util.Step
+import kotlinx.coroutines.launch
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class OnboardingTest {
+class OnboardingScreenTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
     fun onboarding_happy_path() {
-        composeTestRule.setContent {
-            OnboardingScreen(
-                viewModel = OnboardingViewModel(SavedStateHandle()),
-                navigateToLogin = { },
-            )
-        }
+        composeTestRule.setOnboardingContent()
 
         composeTestRule.onNodeWithTag(OnboardingTags.Welcome.PAGE)
             .assertIsDisplayed()
@@ -67,12 +67,7 @@ class OnboardingTest {
 
     @Test
     fun navigation_from_welcome_to_agreement() {
-        composeTestRule.setContent {
-            OnboardingScreen(
-                viewModel = OnboardingViewModel(SavedStateHandle()),
-                navigateToLogin = {}
-            )
-        }
+        composeTestRule.setOnboardingContent()
 
         composeTestRule.onNodeWithTag(OnboardingTags.Welcome.PAGE)
             .assertIsDisplayed()
@@ -87,18 +82,7 @@ class OnboardingTest {
 
     @Test
     fun agreement_checkbox_toggles_navigation_availability() {
-        composeTestRule.setContent {
-            OnboardingScreen(
-                viewModel = OnboardingViewModel(
-                    SavedStateHandle(
-                        mapOf(
-                            STEP_KEY to Step.AGREEMENT,
-                        )
-                    )
-                ),
-                navigateToLogin = {}
-            )
-        }
+        composeTestRule.setOnboardingContent(step = Step.AGREEMENT)
 
         composeTestRule.onNodeWithTag(OnboardingTags.NAVIGATION_BUTTON)
             .assertIsNotEnabled()
@@ -118,19 +102,10 @@ class OnboardingTest {
 
     @Test
     fun from_agreement_to_states() {
-        composeTestRule.setContent {
-            OnboardingScreen(
-                viewModel = OnboardingViewModel(
-                    SavedStateHandle(
-                        mapOf(
-                            STEP_KEY to Step.AGREEMENT,
-                            AGREEMENT_KEY to true
-                        )
-                    )
-                ),
-                navigateToLogin = {}
-            )
-        }
+        composeTestRule.setOnboardingContent(
+            step = Step.AGREEMENT,
+            isAgreementAccepted = true
+        )
 
         composeTestRule.onNodeWithTag(OnboardingTags.Agreement.PAGE)
             .assertIsDisplayed()
@@ -145,19 +120,10 @@ class OnboardingTest {
 
     @Test
     fun selecting_state_enables_navigation() {
-        composeTestRule.setContent {
-            OnboardingScreen(
-                viewModel = OnboardingViewModel(
-                    SavedStateHandle(
-                        mapOf(
-                            STEP_KEY to Step.STATES,
-                            AGREEMENT_KEY to true
-                        )
-                    )
-                ),
-                navigateToLogin = {}
-            )
-        }
+        composeTestRule.setOnboardingContent(
+            step = Step.STATES,
+            isAgreementAccepted = true
+        )
 
         composeTestRule.onNodeWithTag(OnboardingTags.NAVIGATION_BUTTON)
             .assertIsDisplayed()
@@ -176,23 +142,17 @@ class OnboardingTest {
     }
 
     @Test
-    fun navigation_to_login_trigger_check() {
+    fun navigate_to_login() {
         var isTriggered = false
 
-        composeTestRule.setContent {
-            OnboardingScreen(
-                viewModel = OnboardingViewModel(
-                    SavedStateHandle(
-                        mapOf(
-                            STEP_KEY to Step.STATES,
-                            AGREEMENT_KEY to true,
-                            STATE_KEY to State.NJ
-                        )
-                    )
-                ),
-                navigateToLogin = { isTriggered = true }
-            )
-        }
+        composeTestRule.setOnboardingContent(
+            step = Step.STATES,
+            isAgreementAccepted = true,
+            examState = State.NJ,
+            onNavigateClick = {
+                isTriggered = true
+            }
+        )
 
         composeTestRule.onNodeWithTag(OnboardingTags.NAVIGATION_BUTTON)
             .assertIsDisplayed()
@@ -200,5 +160,46 @@ class OnboardingTest {
             .performClick()
 
         assertTrue(isTriggered)
+    }
+
+    private fun ComposeContentTestRule.setOnboardingContent(
+        step: Step = Step.WELCOME,
+        isAgreementAccepted: Boolean = false,
+        examState: State = State.NONE,
+        onNavigateClick: () -> Unit = {}
+    ) {
+        setContent {
+            val pagerState = rememberPagerState(initialPage = step.index) { Step.entries.size }
+
+            var step by remember { mutableStateOf(step) }
+            var isAgreementAccepted by remember { mutableStateOf(isAgreementAccepted) }
+            var examState by remember { mutableStateOf(examState) }
+
+            val scope = rememberCoroutineScope()
+
+            OnboardingUI(
+                pagerState = pagerState,
+                step = step,
+                agreementPageData = AgreementPageData(
+                    isAgreementAccepted = isAgreementAccepted,
+                    onAgreementClick = { isAgreementAccepted = !isAgreementAccepted }
+                ),
+                statesPageData = StatesPageData(
+                    examState = examState,
+                    onRadioClick = { examState = it }
+                ),
+                onNextClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(
+                            page = step.index
+                        )
+                    }
+                },
+                onNavigateClick = onNavigateClick,
+                onStepChange = {
+                    step = Step.entries[step.index + 1]
+                }
+            )
+        }
     }
 }

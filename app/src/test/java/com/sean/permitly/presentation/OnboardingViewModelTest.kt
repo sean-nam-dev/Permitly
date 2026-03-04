@@ -3,10 +3,15 @@ package com.sean.permitly.presentation
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.sean.permitly.domain.model.State
+import com.sean.permitly.domain.repository.AppSettingsRepository
+import com.sean.permitly.domain.usecase.WriteFirstLaunchUseCase
+import com.sean.permitly.domain.usecase.WriteStateUseCase
 import com.sean.permitly.presentation.onboarding.OnboardingEvent
 import com.sean.permitly.presentation.onboarding.OnboardingViewModel
+import com.sean.permitly.presentation.onboarding.OnboardingViewModel.Companion.STEP_KEY
 import com.sean.permitly.presentation.onboarding.util.Step
 import com.sean.permitly.util.dispatcher.MainDispatcherRule
+import com.sean.permitly.util.repository.FakeAppSettingsRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
@@ -16,18 +21,27 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class OnboardingViewModelTest {
 
+    private val appSettingsRepository: AppSettingsRepository = FakeAppSettingsRepository()
+    private val writeStateUseCase: WriteStateUseCase = WriteStateUseCase(appSettingsRepository)
+    private val writeFirstLaunchUseCase: WriteFirstLaunchUseCase =
+        WriteFirstLaunchUseCase(appSettingsRepository)
+
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
     @Test
-    fun `onNextClick triggers Navigate event`() = runTest {
-        val viewModel = OnboardingViewModel(SavedStateHandle())
+    fun `onNextClick triggers Next event`() = runTest {
+        val viewModel = OnboardingViewModel(
+            savedStateHandle = SavedStateHandle(),
+            writeStateUseCase = writeStateUseCase,
+            writeFirstLaunchUseCase = writeFirstLaunchUseCase
+        )
 
         Assert.assertEquals(Step.WELCOME, viewModel.state.value.step)
 
         viewModel.event.test {
             viewModel.onNextClick()
-            Assert.assertEquals(OnboardingEvent.Navigate, awaitItem())
+            Assert.assertEquals(OnboardingEvent.Next, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -35,11 +49,13 @@ class OnboardingViewModelTest {
     @Test
     fun `onAgreementClick toggles isAgreementAccepted`() {
         val viewModel = OnboardingViewModel(
-            SavedStateHandle(
+            savedStateHandle = SavedStateHandle(
                 mapOf(
-                    OnboardingViewModel.Companion.STEP_KEY to Step.AGREEMENT
+                    STEP_KEY to Step.AGREEMENT
                 )
-            )
+            ),
+            writeStateUseCase = writeStateUseCase,
+            writeFirstLaunchUseCase = writeFirstLaunchUseCase
         )
 
         Assert.assertFalse(viewModel.state.value.isAgreementAccepted)
@@ -56,11 +72,13 @@ class OnboardingViewModelTest {
     @Test
     fun `onRadioClick assigns value to examState`() {
         val viewModel = OnboardingViewModel(
-            SavedStateHandle(
+            savedStateHandle = SavedStateHandle(
                 mapOf(
-                    OnboardingViewModel.Companion.STEP_KEY to Step.STATES
+                    STEP_KEY to Step.STATES
                 )
-            )
+            ),
+            writeStateUseCase = writeStateUseCase,
+            writeFirstLaunchUseCase = writeFirstLaunchUseCase
         )
 
         Assert.assertEquals(State.NONE, viewModel.state.value.examState)
