@@ -37,6 +37,7 @@ fun OnboardingUI(
     agreementPageData: AgreementPageData,
     statesPageData: StatesPageData,
     onNextClick: () -> Unit,
+    onNavigateClick: () -> Unit,
     onStepChange: (Step) -> Unit
 ) {
     val primaryButtonData = when (step) {
@@ -62,7 +63,7 @@ fun OnboardingUI(
             text = stringResource(R.string.get_started),
             enabled = statesPageData.examState != State.NONE,
             action = {
-                onNextClick()
+                onNavigateClick()
             }
         )
     }
@@ -110,8 +111,6 @@ fun OnboardingUI(
 private fun OnboardingUIPreview() {
     val pagerState = rememberPagerState { Step.entries.size }
 
-
-
     PermitlyTheme {
         OnboardingUI(
             pagerState = pagerState,
@@ -125,6 +124,7 @@ private fun OnboardingUIPreview() {
                 onRadioClick = {}
             ),
             onNextClick = {},
+            onNavigateClick = {},
             onStepChange = {}
         )
     }

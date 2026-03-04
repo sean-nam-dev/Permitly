@@ -5,13 +5,10 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sean.permitly.presentation.onboarding.pages.agreement.AgreementPageData
 import com.sean.permitly.presentation.onboarding.pages.states.StatesPageData
 import com.sean.permitly.presentation.onboarding.util.Step
-import com.sean.permitly.ui.theme.PermitlyTheme
 
 @Composable
 fun OnboardingScreen(
@@ -26,17 +23,17 @@ fun OnboardingScreen(
     LaunchedEffect(Unit) {
         viewModel.event.collect { event ->
             when (event) {
-                OnboardingEvent.Navigate -> {
-                    if (pagerState.currentPage < pagerState.pageCount - 1) {
-                        pagerState.animateScrollToPage(
-                            page = pagerState.currentPage + 1,
-                            animationSpec = spring(
-                                stiffness = Spring.StiffnessLow
-                            )
+                OnboardingEvent.Next -> {
+                    pagerState.animateScrollToPage(
+                        page = state.value.step.index,
+                        animationSpec = spring(
+                            stiffness = Spring.StiffnessLow
                         )
-                    } else {
-                        navigateToLogin()
-                    }
+                    )
+                }
+
+                OnboardingEvent.Navigate -> {
+                    navigateToLogin()
                 }
             }
         }
@@ -54,19 +51,7 @@ fun OnboardingScreen(
             onRadioClick = viewModel::onRadioClick
         ),
         onNextClick = viewModel::onNextClick,
+        onNavigateClick = viewModel::onNavigateClick,
         onStepChange = viewModel::onStepChange
     )
-}
-
-@Preview
-@Composable
-private fun OnboardingScreenPreview() {
-    val viewModel = viewModel<OnboardingViewModel>()
-
-    PermitlyTheme {
-        OnboardingScreen(
-            viewModel = viewModel,
-            navigateToLogin = {},
-        )
-    }
 }

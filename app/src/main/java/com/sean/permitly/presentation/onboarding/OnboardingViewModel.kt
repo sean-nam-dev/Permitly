@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sean.permitly.domain.model.State
+import com.sean.permitly.domain.usecase.WriteFirstLaunchUseCase
+import com.sean.permitly.domain.usecase.WriteStateUseCase
 import com.sean.permitly.presentation.onboarding.util.Step
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,7 +16,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class OnboardingViewModel(
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    private val writeStateUseCase: WriteStateUseCase,
+    private val writeFirstLaunchUseCase: WriteFirstLaunchUseCase
 ) : ViewModel(), OnboardingAction {
     private val _state = MutableStateFlow(
         OnboardingState(
@@ -36,7 +40,18 @@ class OnboardingViewModel(
 
     override fun onNextClick() {
         viewModelScope.launch {
-            _event.emit(OnboardingEvent.Navigate)
+            _event.emit(OnboardingEvent.Next)
+        }
+    }
+
+    override fun onNavigateClick() {
+        viewModelScope.launch {
+            if (_state.value.examState != State.NONE && _state.value.isAgreementAccepted) {
+                writeStateUseCase(_state.value.examState)
+                writeFirstLaunchUseCase(_state.value.isAgreementAccepted)
+
+                _event.emit(OnboardingEvent.Navigate)
+            }
         }
     }
 
