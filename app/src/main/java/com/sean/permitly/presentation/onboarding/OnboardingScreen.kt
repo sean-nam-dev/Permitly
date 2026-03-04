@@ -42,8 +42,6 @@ fun OnboardingScreen(
         }
     }
 
-
-
     OnboardingUI(
         pagerState = pagerState,
         step = state.value.step,

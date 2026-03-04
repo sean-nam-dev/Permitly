@@ -110,6 +110,8 @@ fun OnboardingUI(
 private fun OnboardingUIPreview() {
     val pagerState = rememberPagerState { Step.entries.size }
 
+
+
     PermitlyTheme {
         OnboardingUI(
             pagerState = pagerState,
