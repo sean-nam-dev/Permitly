@@ -12,6 +12,6 @@ data class OnboardingState(
         get() = when (step) {
             Step.WELCOME -> true
             Step.AGREEMENT -> isAgreementAccepted
-            Step.STATES -> examState != State.NONE
+            Step.STATES -> isAgreementAccepted && examState != State.NONE
         }
 }

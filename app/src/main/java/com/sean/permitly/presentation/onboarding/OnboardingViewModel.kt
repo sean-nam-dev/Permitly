@@ -3,9 +3,10 @@ package com.sean.permitly.presentation.onboarding
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sean.permitly.domain.error.onError
+import com.sean.permitly.domain.error.onSuccess
 import com.sean.permitly.domain.model.State
-import com.sean.permitly.domain.usecase.WriteFirstLaunchUseCase
-import com.sean.permitly.domain.usecase.WriteStateUseCase
+import com.sean.permitly.domain.usecase.CompleteOnboardingUseCase
 import com.sean.permitly.presentation.onboarding.util.Step
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,8 +18,7 @@ import kotlinx.coroutines.launch
 
 class OnboardingViewModel(
     private val savedStateHandle: SavedStateHandle,
-    private val writeStateUseCase: WriteStateUseCase,
-    private val writeFirstLaunchUseCase: WriteFirstLaunchUseCase
+    private val completeOnboardingUseCase: CompleteOnboardingUseCase
 ) : ViewModel(), OnboardingAction {
     private val _state = MutableStateFlow(
         OnboardingState(
@@ -44,37 +44,53 @@ class OnboardingViewModel(
                 updateStep(Step.AGREEMENT)
                 emitNext()
             }
-
-            Step.AGREEMENT -> if (_state.value.isAgreementAccepted) {
+            Step.AGREEMENT -> if (_state.value.isPrimaryButtonEnabled) {
                 updateStep(Step.STATES)
                 emitNext()
             }
-
-            Step.STATES -> if (_state.value.examState != State.NONE) {
+            Step.STATES -> if (_state.value.isPrimaryButtonEnabled) {
                 viewModelScope.launch {
-                    writeStateUseCase(_state.value.examState)
-                    writeFirstLaunchUseCase(_state.value.isAgreementAccepted)
-
-                    _event.emit(OnboardingEvent.Navigate)
+                    completeOnboardingUseCase(
+                        state = _state.value.examState,
+                        isAgreementAccepted = _state.value.isAgreementAccepted
+                    ).onSuccess {
+                        _event.emit(OnboardingEvent.Navigate)
+                    }.onError {
+                        resetToDefault()
+                        _event.emit(OnboardingEvent.ShowLocalErrorToast(it))
+                    }
                 }
             }
         }
     }
 
     override fun onAgreementClick() {
-        val newValue = !_state.value.isAgreementAccepted
-        _state.update { it.copy(isAgreementAccepted = newValue) }
-        savedStateHandle[AGREEMENT_KEY] = newValue
+        updateAgreement(!_state.value.isAgreementAccepted)
     }
 
     override fun onRadioClick(state: State) {
-        _state.update { it.copy(examState = state) }
-        savedStateHandle[STATE_KEY] = state
+        updateState(state)
     }
 
-    private fun updateStep(step: Step) {
-        _state.update { it.copy(step = step) }
-        savedStateHandle[STEP_KEY] = step
+    private fun updateStep(new: Step) {
+        _state.update { it.copy(step = new) }
+        savedStateHandle[STEP_KEY] = new
+    }
+
+    private fun updateAgreement(new: Boolean) {
+        _state.update { it.copy(isAgreementAccepted = new) }
+        savedStateHandle[AGREEMENT_KEY] = new
+    }
+
+    private fun updateState(new: State) {
+        _state.update { it.copy(examState = new) }
+        savedStateHandle[STATE_KEY] = new
+    }
+
+    private fun resetToDefault() {
+        updateStep(Step.WELCOME)
+        updateAgreement(false)
+        updateState(State.NONE)
     }
 
     private fun emitNext() {
