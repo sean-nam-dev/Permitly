@@ -32,42 +32,15 @@ import com.sean.permitly.ui.theme.PermitlyTheme
 @Composable
 fun OnboardingUI(
     pagerState: PagerState,
-    step: Step,
     agreementPageData: AgreementPageData,
     statesPageData: StatesPageData,
-    onNextClick: () -> Unit,
-    onNavigateClick: () -> Unit,
-    onStepChange: (Step) -> Unit
+    isPrimaryButtonEnabled: Boolean,
+    onPrimaryButtonClick: () -> Unit
 ) {
-    val (text, enabled, action) = when (step) {
-        Step.WELCOME -> {
-            Triple(
-                stringResource(R.string.next),
-                true
-            ) {
-                onStepChange(Step.AGREEMENT)
-                onNextClick()
-            }
-        }
-
-        Step.AGREEMENT -> {
-            Triple(
-                stringResource(R.string.next),
-                agreementPageData.isAgreementAccepted
-            ) {
-                onStepChange(Step.STATES)
-                onNextClick()
-            }
-        }
-
-        Step.STATES -> {
-            Triple(
-                stringResource(R.string.get_started),
-                statesPageData.examState != State.NONE
-            ) {
-                onNavigateClick()
-            }
-        }
+    val primaryButtonText = when (pagerState.currentPage) {
+        Step.WELCOME.index -> stringResource(R.string.next)
+        Step.AGREEMENT.index -> stringResource(R.string.next)
+        else -> stringResource(R.string.get_started)
     }
 
     Column(
@@ -103,9 +76,9 @@ fun OnboardingUI(
                     end = Dimens.M_0,
                     bottom = Dimens.L_0
                 ),
-            text = text,
-            enabled = enabled,
-            action = action
+            text = primaryButtonText,
+            enabled = isPrimaryButtonEnabled,
+            action = onPrimaryButtonClick
         )
     }
 }
@@ -118,7 +91,6 @@ private fun OnboardingUIPreview() {
             pagerState = rememberPagerState {
                 Step.entries.size
             },
-            step = Step.WELCOME,
             agreementPageData = AgreementPageData(
                 isAgreementAccepted = false,
                 onAgreementClick = {}
@@ -127,9 +99,8 @@ private fun OnboardingUIPreview() {
                 examState = State.NONE,
                 onRadioClick = {}
             ),
-            onNextClick = {},
-            onNavigateClick = {},
-            onStepChange = {}
+            isPrimaryButtonEnabled = true,
+            onPrimaryButtonClick = {}
         )
     }
 }

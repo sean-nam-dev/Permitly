@@ -40,7 +40,6 @@ fun OnboardingScreen(
 
     OnboardingUI(
         pagerState = pagerState,
-        step = state.value.step,
         agreementPageData = AgreementPageData(
             isAgreementAccepted = state.value.isAgreementAccepted,
             onAgreementClick = viewModel::onAgreementClick
@@ -49,8 +48,7 @@ fun OnboardingScreen(
             examState = state.value.examState,
             onRadioClick = viewModel::onRadioClick
         ),
-        onNextClick = viewModel::onNextClick,
-        onNavigateClick = viewModel::onNavigateClick,
-        onStepChange = viewModel::onStepChange
+        isPrimaryButtonEnabled = state.value.isPrimaryButtonEnabled,
+        onPrimaryButtonClick = viewModel::onPrimaryButtonClick
     )
 }

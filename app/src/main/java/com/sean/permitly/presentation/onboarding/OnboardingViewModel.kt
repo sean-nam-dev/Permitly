@@ -38,26 +38,27 @@ class OnboardingViewModel(
     val event: SharedFlow<OnboardingEvent>
         get() = _event
 
-    override fun onNextClick() {
-        viewModelScope.launch {
-            _event.emit(OnboardingEvent.Next)
-        }
-    }
+    override fun onPrimaryButtonClick() {
+        when (_state.value.step) {
+            Step.WELCOME -> {
+                updateStep(Step.AGREEMENT)
+                emitNext()
+            }
 
-    override fun onNavigateClick() {
-        viewModelScope.launch {
-            if (_state.value.examState != State.NONE && _state.value.isAgreementAccepted) {
-                writeStateUseCase(_state.value.examState)
-                writeFirstLaunchUseCase(_state.value.isAgreementAccepted)
+            Step.AGREEMENT -> if (_state.value.isAgreementAccepted) {
+                updateStep(Step.STATES)
+                emitNext()
+            }
 
-                _event.emit(OnboardingEvent.Navigate)
+            Step.STATES -> if (_state.value.examState != State.NONE) {
+                viewModelScope.launch {
+                    writeStateUseCase(_state.value.examState)
+                    writeFirstLaunchUseCase(_state.value.isAgreementAccepted)
+
+                    _event.emit(OnboardingEvent.Navigate)
+                }
             }
         }
-    }
-
-    override fun onStepChange(step: Step) {
-        _state.update { it.copy(step = step) }
-        savedStateHandle[STEP_KEY] = step
     }
 
     override fun onAgreementClick() {
@@ -69,6 +70,17 @@ class OnboardingViewModel(
     override fun onRadioClick(state: State) {
         _state.update { it.copy(examState = state) }
         savedStateHandle[STATE_KEY] = state
+    }
+
+    private fun updateStep(step: Step) {
+        _state.update { it.copy(step = step) }
+        savedStateHandle[STEP_KEY] = step
+    }
+
+    private fun emitNext() {
+        viewModelScope.launch {
+            _event.emit(OnboardingEvent.Next)
+        }
     }
 
     companion object {

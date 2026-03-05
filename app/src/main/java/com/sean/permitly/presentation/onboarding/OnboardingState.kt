@@ -7,4 +7,11 @@ data class OnboardingState(
     val step: Step,
     val isAgreementAccepted: Boolean,
     val examState: State
-)
+) {
+    val isPrimaryButtonEnabled: Boolean
+        get() = when (step) {
+            Step.WELCOME -> true
+            Step.AGREEMENT -> isAgreementAccepted
+            Step.STATES -> examState != State.NONE
+        }
+}

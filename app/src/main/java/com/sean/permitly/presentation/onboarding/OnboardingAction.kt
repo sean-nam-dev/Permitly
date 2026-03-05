@@ -1,12 +1,9 @@
 package com.sean.permitly.presentation.onboarding
 
 import com.sean.permitly.domain.model.State
-import com.sean.permitly.presentation.onboarding.util.Step
 
 interface OnboardingAction {
-    fun onNextClick()
-    fun onNavigateClick()
-    fun onStepChange(step: Step)
+    fun onPrimaryButtonClick()
     fun onAgreementClick()
     fun onRadioClick(state: State)
 }
