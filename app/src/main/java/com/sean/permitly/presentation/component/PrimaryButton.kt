@@ -15,23 +15,19 @@ import androidx.compose.ui.unit.dp
 import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.PermitlyTheme
 
-data class PrimaryButtonData(
-    val text: String,
-    val enabled: Boolean,
-    val action: () -> Unit
-)
-
 @Composable
 fun PrimaryButton(
     modifier: Modifier = Modifier,
-    primaryButtonData: PrimaryButtonData
+    text: String,
+    enabled: Boolean,
+    action: () -> Unit
 ) {
     Button(
-        onClick = primaryButtonData.action,
+        onClick = action,
         modifier = modifier
             .fillMaxWidth()
             .height(Dimens.XXL_5),
-        enabled = primaryButtonData.enabled,
+        enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -40,7 +36,7 @@ fun PrimaryButton(
         )
     ) {
         Text(
-            text = primaryButtonData.text,
+            text = text,
             style = MaterialTheme.typography.headlineMedium
         )
     }
@@ -52,25 +48,18 @@ fun PrimaryButton(
 )
 @Composable
 private fun PrimaryButtonComponentPreview() {
-    val primaryButtonData1 = PrimaryButtonData(
-        text = "Next",
-        enabled = true,
-        action = {}
-    )
-    val primaryButtonData2 = PrimaryButtonData(
-        text = "Next",
-        enabled = false,
-        action = {}
-    )
-
     PermitlyTheme {
         Column {
             PrimaryButton(
-                primaryButtonData = primaryButtonData1
+                text = "Next",
+                enabled = true,
+                action = {}
             )
             Spacer(modifier = Modifier.height(10.dp))
             PrimaryButton(
-                primaryButtonData = primaryButtonData2
+                text = "Next",
+                enabled = false,
+                action = {}
             )
         }
     }

@@ -31,7 +31,6 @@ fun OnboardingScreen(
                         )
                     )
                 }
-
                 OnboardingEvent.Navigate -> {
                     navigateToLogin()
                 }

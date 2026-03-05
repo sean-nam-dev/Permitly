@@ -19,7 +19,6 @@ import com.sean.permitly.R
 import com.sean.permitly.domain.model.State
 import com.sean.permitly.presentation.component.NavigationProgress
 import com.sean.permitly.presentation.component.PrimaryButton
-import com.sean.permitly.presentation.component.PrimaryButtonData
 import com.sean.permitly.presentation.onboarding.pages.WelcomePage
 import com.sean.permitly.presentation.onboarding.pages.agreement.AgreementPage
 import com.sean.permitly.presentation.onboarding.pages.agreement.AgreementPageData
@@ -40,32 +39,35 @@ fun OnboardingUI(
     onNavigateClick: () -> Unit,
     onStepChange: (Step) -> Unit
 ) {
-    val primaryButtonData = when (step) {
-        Step.WELCOME -> PrimaryButtonData(
-            text = stringResource(R.string.next),
-            enabled = true,
-            action = {
+    val (text, enabled, action) = when (step) {
+        Step.WELCOME -> {
+            Triple(
+                stringResource(R.string.next),
+                true
+            ) {
                 onStepChange(Step.AGREEMENT)
                 onNextClick()
             }
-        )
+        }
 
-        Step.AGREEMENT -> PrimaryButtonData(
-            text = stringResource(R.string.next),
-            enabled = agreementPageData.isAgreementAccepted,
-            action = {
+        Step.AGREEMENT -> {
+            Triple(
+                stringResource(R.string.next),
+                agreementPageData.isAgreementAccepted
+            ) {
                 onStepChange(Step.STATES)
                 onNextClick()
             }
-        )
+        }
 
-        Step.STATES -> PrimaryButtonData(
-            text = stringResource(R.string.get_started),
-            enabled = statesPageData.examState != State.NONE,
-            action = {
+        Step.STATES -> {
+            Triple(
+                stringResource(R.string.get_started),
+                statesPageData.examState != State.NONE
+            ) {
                 onNavigateClick()
             }
-        )
+        }
     }
 
     Column(
@@ -101,7 +103,9 @@ fun OnboardingUI(
                     end = Dimens.M_0,
                     bottom = Dimens.L_0
                 ),
-            primaryButtonData = primaryButtonData
+            text = text,
+            enabled = enabled,
+            action = action
         )
     }
 }
@@ -109,11 +113,11 @@ fun OnboardingUI(
 @Preview
 @Composable
 private fun OnboardingUIPreview() {
-    val pagerState = rememberPagerState { Step.entries.size }
-
     PermitlyTheme {
         OnboardingUI(
-            pagerState = pagerState,
+            pagerState = rememberPagerState {
+                Step.entries.size
+            },
             step = Step.WELCOME,
             agreementPageData = AgreementPageData(
                 isAgreementAccepted = false,
