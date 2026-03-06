@@ -1,6 +1,5 @@
 package com.sean.permitly.presentation.onboarding
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +8,11 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -32,6 +35,7 @@ import com.sean.permitly.ui.theme.PermitlyTheme
 @Composable
 fun OnboardingUI(
     pagerState: PagerState,
+    snackBarHostState: SnackbarHostState,
     agreementPageData: AgreementPageData,
     statesPageData: StatesPageData,
     isPrimaryButtonEnabled: Boolean,
@@ -43,43 +47,51 @@ fun OnboardingUI(
         else -> stringResource(R.string.get_started)
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.spacedBy(Dimens.M_0)
-    ) {
-        HorizontalPager(
-            modifier = Modifier.weight(1f),
-            state = pagerState,
-            userScrollEnabled = false,
-            key = { Step.entries[it] }
-        ) { page ->
-            when (page) {
-                0 -> WelcomePage()
-                1 -> AgreementPage(agreementPageData)
-                2 -> StatesPage(statesPageData)
-            }
-        }
-
-        NavigationProgress(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            size = pagerState.pageCount,
-            currentIndex = pagerState.currentPage
-        )
-
-        PrimaryButton(
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        snackbarHost = {
+            SnackbarHost(hostState = snackBarHostState)
+        },
+        containerColor = MaterialTheme.colorScheme.background,
+    ) { contentPadding ->
+        Column(
             modifier = Modifier
-                .testTag(OnboardingTags.NAVIGATION_BUTTON)
-                .padding(
-                    start = Dimens.M_0,
-                    end = Dimens.M_0,
-                    bottom = Dimens.L_0
-                ),
-            text = primaryButtonText,
-            enabled = isPrimaryButtonEnabled,
-            action = onPrimaryButtonClick
-        )
+                .fillMaxSize()
+                .padding(contentPadding),
+            verticalArrangement = Arrangement.spacedBy(Dimens.M_0)
+        ) {
+            HorizontalPager(
+                modifier = Modifier.weight(1f),
+                state = pagerState,
+                userScrollEnabled = false,
+                key = { Step.entries[it] }
+            ) { page ->
+                when (page) {
+                    0 -> WelcomePage()
+                    1 -> AgreementPage(agreementPageData)
+                    2 -> StatesPage(statesPageData)
+                }
+            }
+
+            NavigationProgress(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                size = pagerState.pageCount,
+                currentIndex = pagerState.currentPage
+            )
+
+            PrimaryButton(
+                modifier = Modifier
+                    .testTag(OnboardingTags.NAVIGATION_BUTTON)
+                    .padding(
+                        start = Dimens.M_0,
+                        end = Dimens.M_0,
+                        bottom = Dimens.L_0
+                    ),
+                text = primaryButtonText,
+                enabled = isPrimaryButtonEnabled,
+                action = onPrimaryButtonClick
+            )
+        }
     }
 }
 
@@ -91,12 +103,15 @@ private fun OnboardingUIPreview() {
             pagerState = rememberPagerState {
                 Step.entries.size
             },
+            snackBarHostState = remember {
+                SnackbarHostState()
+            },
             agreementPageData = AgreementPageData(
-                isAgreementAccepted = false,
+                isAgreementAccepted = true,
                 onAgreementClick = {}
             ),
             statesPageData = StatesPageData(
-                examState = State.NONE,
+                examState = State.NJ,
                 onRadioClick = {}
             ),
             isPrimaryButtonEnabled = true,

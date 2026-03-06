@@ -16,7 +16,10 @@
     <string name="new_jersey">New Jersey</string>
     <string name="texas">Texas</string>
 
-    
+    <string name="error_io">"Something went wrong. Please try again."</string>
+    <string name="error_disk_full">Not enough storage space on your device.</string>
+    <string name="error_unknown">Unexpected error occurred. Please try again.</string>
+
     <string-array name="agreement_titles">
         <item>Privacy Policy</item>
         <item>Terms of Use</item>
