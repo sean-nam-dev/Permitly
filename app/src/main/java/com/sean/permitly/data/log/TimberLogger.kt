@@ -2,8 +2,9 @@ package com.sean.permitly.data.log
 
 import com.sean.permitly.core.common.Logger
 import timber.log.Timber
+import javax.inject.Inject
 
-class TimberLogger : Logger {
+class TimberLogger @Inject constructor() : Logger {
 
     override fun d(tag: String?, message: String, throwable: Throwable?) {
         val timber = tag?.let { Timber.tag(it) } ?: Timber

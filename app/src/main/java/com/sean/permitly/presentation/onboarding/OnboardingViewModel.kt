@@ -8,6 +8,7 @@ import com.sean.permitly.domain.error.onSuccess
 import com.sean.permitly.domain.model.State
 import com.sean.permitly.domain.usecase.CompleteOnboardingUseCase
 import com.sean.permitly.presentation.onboarding.util.Step
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,8 +16,10 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class OnboardingViewModel(
+@HiltViewModel
+class OnboardingViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val completeOnboardingUseCase: CompleteOnboardingUseCase
 ) : ViewModel(), OnboardingAction {

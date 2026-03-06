@@ -4,8 +4,9 @@ import com.sean.permitly.data.util.AppSettingsKeys
 import com.sean.permitly.domain.model.State
 import com.sean.permitly.domain.repository.AppSettingsRepository
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class ReadStateUseCase(
+class ReadStateUseCase @Inject constructor(
     private val appSettingsRepository: AppSettingsRepository
 ) {
     operator fun invoke() = appSettingsRepository.read(

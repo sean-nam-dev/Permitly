@@ -3,8 +3,9 @@ package com.sean.permitly.data.error
 import androidx.datastore.core.IOException
 import com.sean.permitly.domain.error.DataError
 import com.sean.permitly.domain.error.ErrorMapper
+import javax.inject.Inject
 
-class LocalErrorMapper : ErrorMapper<DataError.Local> {
+class LocalErrorMapper @Inject constructor() : ErrorMapper<DataError.Local> {
     override fun map(throwable: Throwable): DataError.Local {
         return when (throwable) {
             is IOException -> {
