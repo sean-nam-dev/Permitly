@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,6 +42,7 @@ fun StatesPage(statesPageData: StatesPageData) {
         modifier = Modifier
             .testTag(OnboardingTags.States.PAGE)
             .fillMaxSize()
+            .safeDrawingPadding()
     ) {
         Column(
             modifier = Modifier

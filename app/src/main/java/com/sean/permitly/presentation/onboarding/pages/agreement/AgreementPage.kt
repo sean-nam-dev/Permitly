@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,7 +42,8 @@ fun AgreementPage(agreementPageData: AgreementPageData) {
     Column(
         modifier = Modifier
             .testTag(OnboardingTags.Agreement.PAGE)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .safeDrawingPadding(),
         verticalArrangement = Arrangement.spacedBy(Dimens.M_0)
     ) {
         Column(
