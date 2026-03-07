@@ -1,6 +1,6 @@
 package com.sean.permitly.util.logger
 
-import com.sean.permitly.core.common.Logger
+import com.sean.permitly.domain.logger.Logger
 
 class FakeLogger : Logger {
     override fun d(tag: String?, message: String, throwable: Throwable?) {}

@@ -7,10 +7,10 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.sean.permitly.core.common.Logger
 import com.sean.permitly.data.error.LocalErrorMapper
 import com.sean.permitly.domain.error.DataError
 import com.sean.permitly.domain.error.Result
+import com.sean.permitly.domain.logger.Logger
 import com.sean.permitly.domain.repository.AppSettingsRepository
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow

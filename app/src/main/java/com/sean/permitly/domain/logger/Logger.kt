@@ -1,4 +1,4 @@
-package com.sean.permitly.core.common
+package com.sean.permitly.domain.logger
 
 interface Logger {
 

@@ -1,10 +1,10 @@
 package com.sean.permitly.di
 
-import com.sean.permitly.core.common.Logger
 import com.sean.permitly.data.error.LocalErrorMapper
 import com.sean.permitly.data.log.TimberLogger
 import com.sean.permitly.domain.error.DataError
 import com.sean.permitly.domain.error.ErrorMapper
+import com.sean.permitly.domain.logger.Logger
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

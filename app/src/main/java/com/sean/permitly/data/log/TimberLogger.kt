@@ -1,6 +1,6 @@
 package com.sean.permitly.data.log
 
-import com.sean.permitly.core.common.Logger
+import com.sean.permitly.domain.logger.Logger
 import timber.log.Timber
 import javax.inject.Inject
 
