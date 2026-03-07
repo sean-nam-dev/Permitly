@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.sean.permitly.R
+import com.sean.permitly.presentation.component.AutoSizeText
 import com.sean.permitly.presentation.onboarding.util.OnboardingTags
 import com.sean.permitly.ui.theme.Dimens
 import com.sean.permitly.ui.theme.Elevation
@@ -60,19 +60,19 @@ fun WelcomePage() {
                 .fillMaxSize()
                 .padding(Dimens.M_0)
         ) {
-            Text(
+            AutoSizeText(
                 text = stringResource(R.string.build_confidence),
-                style = MaterialTheme.typography.displayMedium,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.displayMedium
             )
-            Text(
+            AutoSizeText(
                 text = stringResource(R.string.for_your_dmv_test),
-                style = MaterialTheme.typography.displayMedium,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.displayMedium
             )
-            Text(
-                text = stringResource(R.string.practice_exam_questions),
+            AutoSizeText(
                 modifier = Modifier.padding(top = Dimens.S_0),
+                text = stringResource(R.string.practice_exam_questions),
                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
                 style = MaterialTheme.typography.bodyLarge
             )
