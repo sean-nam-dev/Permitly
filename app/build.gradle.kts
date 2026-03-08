@@ -46,6 +46,9 @@ android {
 }
 
 dependencies {
+    testImplementation(libs.test.mockk)
+    androidTestImplementation(libs.test.mockk.android)
+
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
 
@@ -77,4 +80,8 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+}
+
+tasks.withType<Test> {
+    jvmArgs("-XX:+EnableDynamicAgentLoading")
 }
