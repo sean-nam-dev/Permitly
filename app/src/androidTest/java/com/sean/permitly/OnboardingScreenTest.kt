@@ -1,6 +1,7 @@
 package com.sean.permitly
 
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +22,7 @@ import com.sean.permitly.presentation.onboarding.pages.agreement.AgreementPageDa
 import com.sean.permitly.presentation.onboarding.pages.states.StatesPageData
 import com.sean.permitly.presentation.onboarding.util.OnboardingTags
 import com.sean.permitly.presentation.onboarding.util.Step
+import com.sean.permitly.ui.theme.PermitlyTheme
 import kotlinx.coroutines.launch
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -162,6 +164,19 @@ class OnboardingScreenTest {
         assertTrue(isTriggered)
     }
 
+    @Test
+    fun states_navigation_button_is_disabled_without_agreement() {
+        composeTestRule.setOnboardingContent(
+            step = Step.STATES,
+            isAgreementAccepted = false,
+            examState = State.NJ
+        )
+
+        composeTestRule.onNodeWithTag(OnboardingTags.NAVIGATION_BUTTON)
+            .assertIsDisplayed()
+            .assertIsNotEnabled()
+    }
+
     private fun ComposeContentTestRule.setOnboardingContent(
         step: Step = Step.WELCOME,
         isAgreementAccepted: Boolean = false,
@@ -170,36 +185,54 @@ class OnboardingScreenTest {
     ) {
         setContent {
             val pagerState = rememberPagerState(initialPage = step.index) { Step.entries.size }
-
-            var step by remember { mutableStateOf(step) }
-            var isAgreementAccepted by remember { mutableStateOf(isAgreementAccepted) }
-            var examState by remember { mutableStateOf(examState) }
-
+            val snackBarHostState = remember { SnackbarHostState() }
             val scope = rememberCoroutineScope()
 
-            OnboardingUI(
-                pagerState = pagerState,
-                step = step,
-                agreementPageData = AgreementPageData(
-                    isAgreementAccepted = isAgreementAccepted,
-                    onAgreementClick = { isAgreementAccepted = !isAgreementAccepted }
-                ),
-                statesPageData = StatesPageData(
-                    examState = examState,
-                    onRadioClick = { examState = it }
-                ),
-                onNextClick = {
+            var step by remember { mutableStateOf(step) }
+
+            var isAgreementAccepted by remember { mutableStateOf(isAgreementAccepted) }
+            val onAgreementClick: () -> Unit = {
+                isAgreementAccepted = !isAgreementAccepted
+            }
+
+            var examState by remember { mutableStateOf(examState) }
+            val onRadioClick: (State) -> Unit = {
+                examState = it
+            }
+
+            val onPrimaryButtonClick: () -> Unit = {
+                if (step != Step.STATES) {
+                    step = Step.entries[step.index + 1]
                     scope.launch {
                         pagerState.animateScrollToPage(
                             page = step.index
                         )
                     }
-                },
-                onNavigateClick = onNavigateClick,
-                onStepChange = {
-                    step = Step.entries[step.index + 1]
+                } else {
+                    onNavigateClick()
                 }
-            )
+            }
+
+            PermitlyTheme {
+                OnboardingUI(
+                    pagerState = pagerState,
+                    snackBarHostState = snackBarHostState,
+                    agreementPageData = AgreementPageData(
+                        isAgreementAccepted = isAgreementAccepted,
+                        onAgreementClick = onAgreementClick
+                    ),
+                    statesPageData = StatesPageData(
+                        examState = examState,
+                        onRadioClick = onRadioClick
+                    ),
+                    isPrimaryButtonEnabled = when (step) {
+                        Step.WELCOME -> true
+                        Step.AGREEMENT -> isAgreementAccepted
+                        Step.STATES -> isAgreementAccepted && examState != State.NONE
+                    },
+                    onPrimaryButtonClick = onPrimaryButtonClick
+                )
+            }
         }
     }
 }
