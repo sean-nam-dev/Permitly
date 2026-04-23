@@ -22,3 +22,6 @@ local.properties
 
 # ========= Android Studio generated =========
 captures/
+
+# ========= Firebase =========
+google-services.json

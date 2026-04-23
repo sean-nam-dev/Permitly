@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -50,6 +51,9 @@ kotlin {
 }
 
 dependencies {
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+
     testImplementation(libs.test.mockk)
     androidTestImplementation(libs.test.mockk.android)
 
